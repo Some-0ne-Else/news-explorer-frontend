@@ -1,7 +1,7 @@
-import React from "react";
-import "./App.css";
+import React from 'react';
+import './App.css';
 //import Preloader from "../Preloader/Preloader";
-import Header from "../Header/Header";
+import Header from '../Header/Header';
 
 function App() {
   return (
