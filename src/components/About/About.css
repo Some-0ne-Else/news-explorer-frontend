@@ -1,0 +1,41 @@
+.about {
+  margin: 160px auto 0;
+  background: #ffffff;
+}
+
+.about__wrapper {
+  display: flex;
+  margin: 0 216px 0 104px;
+}
+
+.about__photo {
+  border-radius: 1000px;
+  width: 464px;
+  height: 464px;
+}
+
+.about__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 56px;
+}
+
+.about__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1a1b22;
+  text-align: left;
+}
+
+.about__text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1a1b22;
+  text-align: left;
+}

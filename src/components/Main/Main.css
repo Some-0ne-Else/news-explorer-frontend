@@ -1,0 +1,34 @@
+.main {
+  max-width: 1440px;
+  background: url(../../images/main.jpg);
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.main__wrapper {
+  margin: 80px auto 0px;
+  max-width: 608px;
+}
+.main__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 60px;
+  line-height: 64px;
+  color: #ffffff;
+
+  margin: 0 auto 0;
+  text-align: left;
+}
+
+.main__subtitle {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #ffffff;
+  max-width: 545px;
+  margin: 32px 0 64px;
+  text-align: left;
+}
