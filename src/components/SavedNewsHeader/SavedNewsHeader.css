@@ -1,12 +1,14 @@
+.saved-news-header {
+  padding: 40px 0 56px 104px;
+}
+
 .saved-news-header__title {
-  width: 712px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 24px;
   color: rgba(26, 27, 34, 0.5);
-  margin-top: 40px;
 }
 
 .saved-news-header__greeting {
@@ -28,7 +30,9 @@
   font-size: 18px;
   line-height: 24px;
   color: #1a1b22;
+  margin: 0;
 }
+
 .saved-news-header__keywords-span {
   font-family: Roboto;
   font-style: normal;

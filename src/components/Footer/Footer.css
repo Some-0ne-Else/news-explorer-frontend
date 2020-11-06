@@ -38,6 +38,10 @@
   text-decoration: none;
 }
 
+.footer__menu-link {
+  cursor: url('../../images/cursor.svg'), auto;
+}
+
 .footer__social-media {
   margin-left: 42px;
 }
@@ -45,7 +49,9 @@
   width: 20px;
   height: 20px;
 }
-
+.footer__social-media-link {
+  cursor: url('../../images/cursor.svg'), auto;
+}
 .footer__social-media-link:last-child {
   margin-left: 28px;
 }

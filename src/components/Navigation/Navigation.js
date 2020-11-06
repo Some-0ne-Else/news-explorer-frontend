@@ -12,6 +12,7 @@ function Navigation({ isLoggedIn, userName, isSavedNews }) {
   if (isSavedNews) {
     navigationMenuLink =
       'navigation__menu-link navigation__menu-link_theme_white';
+    console.log(navigationMenuLink);
     navigationMenuLinkActive =
       'navigation__menu-link_active navigation__menu-link_active_theme_white';
     navigationMenuItem =

@@ -33,8 +33,15 @@
   width: 168px;
   outline: none;
   border: none;
+  transition: background 0.5s;
 }
-
+.search__button:hover {
+  cursor: url('../../images/cursor.svg'), auto;
+  background: #347eff;
+}
+.search__button:active {
+  background: #2a65cc;
+}
 .search__input::placeholder {
   font-family: Roboto;
   font-style: normal;

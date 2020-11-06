@@ -1,0 +1,39 @@
+.search-results {
+  background: #f5f6f7;
+  padding-bottom: 80px;
+}
+
+.search-results__title {
+  font-family: Roboto Slab;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1a1b22;
+  padding: 80px 104px 0px;
+  margin: 0;
+}
+
+.search-results__load-more-button {
+  background: #ffffff;
+  border-radius: 80px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #1a1b22;
+  border: none;
+  outline: none;
+  padding: 18px 84px 22px;
+  margin: 0 auto;
+  transition: opacity 0.5s;
+}
+
+.search-results__load-more-button:hover {
+  opacity: 0.9;
+  cursor: url('../../images/cursor.svg'), auto;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import './Main.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
+import SearchResults from '../SearchResults/SearchResults';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 
@@ -17,7 +18,7 @@ function Main() {
         </p>
         <SearchForm />
       </div>
-
+      <SearchResults />
       <About />
       <Footer />
     </section>

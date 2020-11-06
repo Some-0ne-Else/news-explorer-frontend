@@ -1,8 +1,6 @@
 .news-card {
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 576px;
   background: #ffffff;
   border-radius: 16px;
 }
@@ -10,6 +8,11 @@
 .news-card__image-wrapper {
   display: flex;
   position: relative;
+}
+
+.news-card__image {
+  border-radius: 16px 16px 0 0;
+  width: 100%;
 }
 
 .news-card__keyword {
@@ -42,6 +45,33 @@
   background-image: url('../../images/news-card_trash.svg');
   background-repeat: no-repeat;
   background-position: center;
+  transition: background-image 0.5s;
+}
+
+.news-card__delete-button:hover {
+  cursor: url('../../images/cursor.svg'), auto;
+  background-image: url('../../images/news-card_trash_active.svg');
+}
+
+.news-card__bookmark-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: #ffffff;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  outline: none;
+  border: none;
+  background-image: url('../../images/news-card_bookmark.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-image 0.5s;
+}
+
+.news-card__bookmark-button:hover {
+  cursor: url('../../images/cursor.svg'), auto;
+  background-image: url('../../images/news-card_bookmark_active.svg');
 }
 .news-card__description-wrapper {
   display: flex;
@@ -60,6 +90,7 @@
   color: #b6bcbf;
   margin: 0;
 }
+
 .news-card__title {
   font-family: Roboto Slab;
   font-style: normal;
@@ -77,6 +108,7 @@
   font-size: 16px;
   line-height: 22px;
   color: #1a1b22;
+  margin: 18px 0 0;
 }
 
 .news-card__source {
@@ -88,4 +120,5 @@
   letter-spacing: 0.4px;
   text-transform: uppercase;
   color: #b6bcbf;
+  margin: 18px 0 24px 0;
 }

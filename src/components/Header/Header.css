@@ -7,6 +7,7 @@
   background: #ffffff;
   box-shadow: inset 0px -1px 0px #d1d2d6;
 }
+
 .header__wrapper {
   display: flex;
   justify-content: space-between;
@@ -27,6 +28,10 @@
   align-items: center;
   color: #ffffff;
   text-decoration: none;
+}
+
+.header__link:hover {
+  cursor: url('../../images/cursor.svg'), auto;
 }
 
 .header__link_theme_white {

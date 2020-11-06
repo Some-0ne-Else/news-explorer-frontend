@@ -24,6 +24,7 @@
   color: #ffffff;
   text-decoration: none;
   display: flex;
+  cursor: url('../../images/cursor.svg'), auto;
 }
 .navigation__menu-link_theme_white {
   color: #1a1b22;

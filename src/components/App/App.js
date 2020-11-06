@@ -7,7 +7,7 @@ import SavedNews from '../SavedNews/SavedNews';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Switch>
         <Route exact path="/">
           <Main />

@@ -1,23 +1,35 @@
 import React from 'react';
 import './NewsCard.css';
 
-function NewsCard({ src }) {
+function NewsCard({ keyword, title, text, date, source, image, isSearchCard }) {
+  if (isSearchCard) {
+    return (
+      <div className="news-card">
+        <div className="news-card__image-wrapper">
+          <button className="news-card__bookmark-button"></button>
+          <img className="news-card__image" src={image} alt="" />
+        </div>
+        <div className="news-card__description-wrapper">
+          <p className="news-card__date">{date}</p>
+          <p className="news-card__title">{title}</p>
+          <p className="news-card__text">{text}</p>
+          <p className="news-card__source">{source}</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="news-card">
       <div className="news-card__image-wrapper">
-        <p className="news-card__keyword">Природа</p>
+        <p className="news-card__keyword">{keyword}</p>
         <button className="news-card__delete-button"></button>
-        <img className="news-card__image" src={src} alt="" />
+        <img className="news-card__image" src={image} alt="" />
       </div>
       <div className="news-card__description-wrapper">
-        <p className="news-card__date">2 августа, 2019</p>
-        <p className="news-card__title">Национальное достояние – парки</p>
-        <p className="news-card__text">
-          В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала
-          складываться система национальных парков – охраняемых территорий, где
-          и сегодня каждый может приобщиться к природе.
-        </p>
-        <p className="news-card__source">Дзен</p>
+        <p className="news-card__date">{date}</p>
+        <p className="news-card__title">{title}</p>
+        <p className="news-card__text">{text}</p>
+        <p className="news-card__source">{source}</p>
       </div>
     </div>
   );
