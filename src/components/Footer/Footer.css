@@ -1,7 +1,7 @@
 .footer {
   display: flex;
   justify-content: space-between;
-  margin: 80px 104px 26px;
+  padding: 32px 104px 26px;
 }
 .footer__wrapper {
   display: flex;

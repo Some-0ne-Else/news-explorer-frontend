@@ -1,0 +1,113 @@
+.popup {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  -webkit-transition: opacity 0.4s ease-in-out;
+  -moz-transition: opacity 0.4s ease-in-out;
+}
+
+.popup__form {
+  width: 430px;
+  height: 380px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  transition: ease 0.5s;
+}
+
+.popup__heading {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  color: #1a1b22;
+  margin: 34px 0 0 36px;
+}
+
+.popup__action-button {
+  background: #2f71e5;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  border-radius: 100px;
+  border: 0;
+  width: 358px;
+  height: 64px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin: 39px auto 16px;
+  outline: none;
+  transition: opacity ease 0.5s;
+  cursor: url('../../images/cursor.svg'), auto;
+}
+
+.popup__action-button_inactive {
+  background: #e6e8eb;
+  color: #b6bcbf;
+}
+
+.popup__option {
+  display: block;
+  margin: 0 auto;
+}
+
+.popup__versa-button {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #2f71e5;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: url('../../images/cursor.svg'), auto;
+  outline: none;
+}
+.popup__close-button {
+  background-image: url('../../images/popup_close.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  height: 35px;
+  width: 35px;
+  border: 0;
+  position: absolute;
+  right: -35px;
+  top: -35px;
+  transition: opacity ease 0.5s;
+  outline: none;
+  cursor: url('../../images/cursor.svg'), auto;
+}
+
+.popup__close-button:hover {
+  opacity: 0.9;
+}
+.popup_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}

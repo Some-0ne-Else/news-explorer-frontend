@@ -32,6 +32,8 @@ function Footer() {
           <a
             className="footer__social-media-link"
             href="https://github.com/Some-0ne-Else"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <img
               className="footer__link-image"
@@ -39,7 +41,12 @@ function Footer() {
               src={githubLogo}
             />
           </a>
-          <a className="footer__social-media-link" href="https://facebook.com">
+          <a
+            className="footer__social-media-link"
+            href="https://facebook.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <img
               className="footer__link-image"
               alt="Facebook logo"

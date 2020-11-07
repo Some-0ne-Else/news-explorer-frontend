@@ -4,19 +4,27 @@ import './Navigation.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 
-function Navigation({ isLoggedIn, userName, isSavedNews }) {
+function Navigation({
+  isLoggedIn,
+  userName,
+  isSavedNews,
+  handleLogout,
+  loginButtonHandler,
+}) {
   let navigationMenuLink = 'navigation__menu-link';
   let navigationMenuLinkActive = 'navigation__menu-link_active';
   let navigationMenuItem = 'navigation__menu-item';
+  let navigationMenuButton = 'navigation__menu-button';
   let exitImg = exitButtonImage;
   if (isSavedNews) {
     navigationMenuLink =
       'navigation__menu-link navigation__menu-link_theme_white';
-    console.log(navigationMenuLink);
     navigationMenuLinkActive =
       'navigation__menu-link_active navigation__menu-link_active_theme_white';
     navigationMenuItem =
       'navigation__menu-item navigation__menu-item_theme_white';
+    navigationMenuButton =
+      'navigation__menu-button navigation__menu-button_theme_white';
     exitImg = exitButtonImageThemeWhite;
   }
 
@@ -45,15 +53,10 @@ function Navigation({ isLoggedIn, userName, isSavedNews }) {
             </NavLink>
           </li>
           <li className={navigationMenuItem}>
-            <NavLink
-              exact
-              to="/sign-out"
-              className={navigationMenuLink}
-              activeClassName={navigationMenuLinkActive}
-            >
+            <button className={navigationMenuButton} onClick={handleLogout}>
               {userName}
               <img alt="Иконка выхода" src={exitImg} />
-            </NavLink>
+            </button>
           </li>
         </ul>
       </nav>
@@ -74,14 +77,9 @@ function Navigation({ isLoggedIn, userName, isSavedNews }) {
           </NavLink>
         </li>
         <li className={navigationMenuItem}>
-          <NavLink
-            exact
-            to="/sign-in"
-            className={navigationMenuLink}
-            activeClassName={navigationMenuLinkActive}
-          >
+          <button onClick={loginButtonHandler} className={navigationMenuButton}>
             Авторизоваться
-          </NavLink>
+          </button>
         </li>
       </ul>
     </nav>

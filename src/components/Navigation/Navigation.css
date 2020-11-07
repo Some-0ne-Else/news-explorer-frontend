@@ -38,14 +38,28 @@
   border-bottom: 3px black solid;
 }
 
-.navigation__menu-item:last-of-type {
+.navigation__menu-button {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  cursor: url('../../images/cursor.svg'), auto;
   border: 1px solid #ffffff;
   box-sizing: border-box;
   border-radius: 100px;
   padding: 12px;
   margin: 0;
+  outline: none;
+  background: transparent;
 }
 
-.navigation__menu-item_theme_white:last-of-type {
+.navigation__menu-button_theme_white {
   border: 1px solid #1a1b22;
+  color: #1a1b22;
 }

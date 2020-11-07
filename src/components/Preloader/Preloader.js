@@ -2,7 +2,12 @@ import React from 'react';
 import './Preloader.css';
 
 function Preloader() {
-  return <i className="circle-preloader"></i>;
+  return (
+    <section className="preloader">
+      <i className="preloader__circle"></i>
+      <p className="preloader__caption">Идет поиск новостей...</p>
+    </section>
+  );
 }
 
 export default Preloader;

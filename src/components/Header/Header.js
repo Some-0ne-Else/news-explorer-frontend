@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
-function Header({ isSavedNews }) {
+function Header({ isLoggedIn, loginButtonHandler, handleLogout, isSavedNews }) {
   let headerLink = 'header__link';
   let header = 'header';
-
   if (isSavedNews) {
     headerLink = 'header__link header__link_theme_white';
     header = 'header header_theme_white';
@@ -20,9 +19,11 @@ function Header({ isSavedNews }) {
           </Link>
         </h1>
         <Navigation
-          isLoggedIn={true}
+          isLoggedIn={isLoggedIn}
           isSavedNews={isSavedNews}
           userName="Грета"
+          loginButtonHandler={loginButtonHandler}
+          handleLogout={handleLogout}
         />
       </div>
     </section>

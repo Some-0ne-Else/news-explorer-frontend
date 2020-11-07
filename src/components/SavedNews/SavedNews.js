@@ -5,7 +5,8 @@ import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
 
-function SavedNews() {
+function SavedNews({ isLoggedIn, handleLogout }) {
+  console.log(handleLogout);
   const keywordsArray = ['Природа', 'Тайга', 'еще один', 'еще один'];
   const cards = [
     {
@@ -71,7 +72,11 @@ function SavedNews() {
   ];
   return (
     <section className="saved-news">
-      <Header isSavedNews={true} />
+      <Header
+        isSavedNews={true}
+        isLoggedIn={isLoggedIn}
+        handleLogout={handleLogout}
+      />
       <SavedNewsHeader userName="Грета" keywordsArray={keywordsArray} />
       <NewsCardList cards={cards} />
       <Footer />
