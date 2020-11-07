@@ -14,16 +14,11 @@ function App() {
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
   const history = useHistory();
 
-  /*DOM SECTION */
-  // const popupWithLogin = document.querySelector(".popup_login");
-  // const popupWithSignup = document.querySelector(".popup_sign-up");
-  // const infoTooltipPopup = document.querySelector(".info-tooltip");
-  // console.log(popupWithLogin)
-
   const handleEscPress = useCallback((event) => {
     if (event.keyCode === 27) {
       closeAnyPopup();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
