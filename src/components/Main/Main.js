@@ -9,11 +9,21 @@ import Footer from '../Footer/Footer';
 // import Preloader from '../Preloader/Preloader';
 // import NoResults from '../NoResults/NoResults';
 
-function Main({ isLoggedIn, loginButtonHandler, handleLogout }) {
+function Main({
+  isLoggedIn,
+  isMobileMenu,
+  isMobileMenuOpen,
+  handleMobileMenuClick,
+  loginButtonHandler,
+  handleLogout,
+}) {
   return (
     <section className="main">
       <Header
         isLoggedIn={isLoggedIn}
+        isMobileMenu={isMobileMenu}
+        isMobileMenuOpen={isMobileMenuOpen}
+        handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
         handleLogout={handleLogout}
         isSavedNews={false}
@@ -24,13 +34,14 @@ function Main({ isLoggedIn, loginButtonHandler, handleLogout }) {
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        <SearchForm />
+        {/* <SearchForm /> */}
       </div>
       {/* <Preloader/> */}
       {/* <NoResults/> */}
       {/* <SearchResults /> */}
-      <About />
-      <Footer />
+
+      {/* <About /> */}
+      {/* <Footer /> */}
     </section>
   );
 }

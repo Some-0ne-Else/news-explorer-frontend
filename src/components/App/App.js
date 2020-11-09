@@ -11,11 +11,28 @@ function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const [isMobileMenu, setIsMobileMenu] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
   const history = useHistory();
 
-  const handleEscPress = useCallback((event) => {
-    if (event.keyCode === 27) {
+  React.useEffect(() => {
+    function checkSizeOfWindow() {
+      if (window.innerWidth <= 400) {
+        setIsMobileMenu(true);
+      } else {
+        setIsMobileMenu(false);
+      }
+    }
+    checkSizeOfWindow();
+    window.addEventListener('resize', checkSizeOfWindow);
+  }, [isMobileMenu]);
+
+  function handleMobileMenuClick() {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  }
+  const handleEscPress = useCallback((evt) => {
+    if (evt.code === 'Escape') {
       closeAnyPopup();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,6 +105,9 @@ function App() {
         <Route exact path="/">
           <Main
             isLoggedIn={isLoggedIn}
+            isMobileMenu={isMobileMenu}
+            isMobileMenuOpen={isMobileMenuOpen}
+            handleMobileMenuClick={handleMobileMenuClick}
             loginButtonHandler={loginButtonHandler}
             handleLogout={handleLogout}
           />

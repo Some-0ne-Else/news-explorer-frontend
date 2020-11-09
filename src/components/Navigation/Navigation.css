@@ -12,7 +12,15 @@
   display: flex;
   align-items: center;
 }
+.navigation__menu-item:last-of-type {
+  margin-right: 0;
+}
 
+@media screen and (max-width: 768px) {
+  .navigation__menu-item {
+    margin-right: 16px;
+  }
+}
 .navigation__menu-link {
   font-family: Roboto;
   font-style: normal;
@@ -26,6 +34,13 @@
   display: flex;
   cursor: url('../../images/cursor.svg'), auto;
 }
+
+@media screen and (max-width: 768px) {
+  .navigation__menu-link {
+    font-size: 16px;
+  }
+}
+
 .navigation__menu-link_theme_white {
   color: #1a1b22;
 }
@@ -59,6 +74,11 @@
   background: transparent;
 }
 
+@media screen and (max-width: 768px) {
+  .navigation__menu-button {
+    font-size: 16px;
+  }
+}
 .navigation__menu-button_theme_white {
   border: 1px solid #1a1b22;
   color: #1a1b22;

@@ -6,6 +6,7 @@ import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 
 function Navigation({
   isLoggedIn,
+  isMobileMenu,
   userName,
   isSavedNews,
   handleLogout,
@@ -28,6 +29,9 @@ function Navigation({
     exitImg = exitButtonImageThemeWhite;
   }
 
+  if (isMobileMenu) {
+    return <p>Mobile</p>;
+  }
   if (isLoggedIn) {
     return (
       <nav className="navigation">
