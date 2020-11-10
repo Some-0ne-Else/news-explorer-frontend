@@ -21,7 +21,7 @@ function App() {
 
   React.useEffect(() => {
     function checkSizeOfWindow() {
-      if (window.innerWidth <= 400) {
+      if (window.innerWidth <= 510) {
         setIsMobileMenu(true);
       } else {
         setIsMobileMenu(false);

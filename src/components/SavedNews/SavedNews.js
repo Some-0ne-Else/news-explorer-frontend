@@ -77,7 +77,10 @@ function SavedNews({
       __v: 0,
     },
   ];
-  ActivateSavedNews();
+  React.useEffect(() => {
+    ActivateSavedNews();
+  }, [ActivateSavedNews]);
+
   return (
     <section className="saved-news">
       <Header
