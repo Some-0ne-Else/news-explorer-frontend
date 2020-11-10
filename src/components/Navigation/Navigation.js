@@ -7,6 +7,7 @@ import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 function Navigation({
   isLoggedIn,
   isMobileMenu,
+  handleMobileMenuClick,
   userName,
   isSavedNews,
   handleLogout,
@@ -16,6 +17,8 @@ function Navigation({
   let navigationMenuLinkActive = 'navigation__menu-link_active';
   let navigationMenuItem = 'navigation__menu-item';
   let navigationMenuButton = 'navigation__menu-button';
+  let navigationMobileButton = 'navigation__mobile-button';
+
   let exitImg = exitButtonImage;
   if (isSavedNews) {
     navigationMenuLink =
@@ -26,11 +29,19 @@ function Navigation({
       'navigation__menu-item navigation__menu-item_theme_white';
     navigationMenuButton =
       'navigation__menu-button navigation__menu-button_theme_white';
+    navigationMobileButton =
+      'navigation__mobile-button navigation__mobile-button_theme_white';
     exitImg = exitButtonImageThemeWhite;
   }
 
   if (isMobileMenu) {
-    return <p>Mobile</p>;
+    return (
+      <button
+        type="button"
+        className={navigationMobileButton}
+        onClick={handleMobileMenuClick}
+      ></button>
+    );
   }
   if (isLoggedIn) {
     return (

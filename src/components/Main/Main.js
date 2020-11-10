@@ -5,24 +5,30 @@ import SearchForm from '../SearchForm/SearchForm';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 /*FOR DEMO REASONS */
-//import SearchResults from '../SearchResults/SearchResults';
+import SearchResults from '../SearchResults/SearchResults';
 // import Preloader from '../Preloader/Preloader';
 // import NoResults from '../NoResults/NoResults';
 
 function Main({
+  DeactivateSavedNews,
   isLoggedIn,
+  userName,
   isMobileMenu,
-  isMobileMenuOpen,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
 }) {
+  React.useEffect(() => {
+    DeactivateSavedNews();
+  });
+
   return (
     <section className="main">
       <Header
+        DeactivateSavedNews={DeactivateSavedNews}
         isLoggedIn={isLoggedIn}
+        userName={userName}
         isMobileMenu={isMobileMenu}
-        isMobileMenuOpen={isMobileMenuOpen}
         handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
         handleLogout={handleLogout}
@@ -34,11 +40,11 @@ function Main({
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        {/* <SearchForm /> */}
+        <SearchForm />
       </div>
       {/* <Preloader/> */}
       {/* <NoResults/> */}
-      {/* <SearchResults /> */}
+      <SearchResults />
 
       {/* <About /> */}
       {/* <Footer /> */}

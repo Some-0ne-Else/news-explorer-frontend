@@ -5,8 +5,15 @@ import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
 
-function SavedNews({ isLoggedIn, handleLogout }) {
-  console.log(handleLogout);
+function SavedNews({
+  ActivateSavedNews,
+  isSavedNews,
+  isLoggedIn,
+  userName,
+  isMobileMenu,
+  handleMobileMenuClick,
+  handleLogout,
+}) {
   const keywordsArray = ['Природа', 'Тайга', 'еще один', 'еще один'];
   const cards = [
     {
@@ -70,14 +77,18 @@ function SavedNews({ isLoggedIn, handleLogout }) {
       __v: 0,
     },
   ];
+  ActivateSavedNews();
   return (
     <section className="saved-news">
       <Header
-        isSavedNews={true}
+        isSavedNews={isSavedNews}
         isLoggedIn={isLoggedIn}
+        userName={userName}
+        isMobileMenu={isMobileMenu}
+        handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
       />
-      <SavedNewsHeader userName="Грета" keywordsArray={keywordsArray} />
+      <SavedNewsHeader userName={userName} keywordsArray={keywordsArray} />
       <NewsCardList cards={cards} />
       <Footer />
     </section>

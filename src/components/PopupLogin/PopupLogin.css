@@ -8,6 +8,12 @@
   margin: 22px 0 0 36px;
 }
 
+@media screen and (max-width: 400px) {
+  .popup__caption {
+    margin: 22px 0 0 16px;
+  }
+}
+
 .popup__input {
   font-family: Inter;
   font-style: normal;
@@ -23,6 +29,14 @@
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
+@media screen and (max-width: 400px) {
+  .popup__input {
+    margin: 9px 0 0 16px;
+    max-width: 288px;
+  }
+}
+
 .popup__input:focus {
   border-bottom: 1px solid #000000;
 }
@@ -39,7 +53,4 @@
   font-size: 12px;
   line-height: 15px;
   color: #ff0000;
-  margin: 0 0 13px 36px;
-  display: inline-block;
-  height: 15px;
 }

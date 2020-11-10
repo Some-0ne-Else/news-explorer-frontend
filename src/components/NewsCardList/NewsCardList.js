@@ -8,7 +8,7 @@ function NewsCardList({ cards, isSearchCard }) {
       {cards.map((card) => (
         <NewsCard
           keyword={card.keyword}
-          title={card.name}
+          title={card.title}
           text={card.text}
           date={card.date}
           image={card.image}

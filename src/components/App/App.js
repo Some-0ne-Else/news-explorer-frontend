@@ -6,14 +6,17 @@ import SavedNews from '../SavedNews/SavedNews';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupSignup from '../PopupSignup/PopupSignup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
-  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [isMobileMenu, setIsMobileMenu] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
+  const [userName, setuserName] = React.useState('');
   const history = useHistory();
 
   React.useEffect(() => {
@@ -30,6 +33,8 @@ function App() {
 
   function handleMobileMenuClick() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    const mobileMenu = document.querySelector('.mobile-menu');
+    mobileMenu.addEventListener('click', closePopupAtOverlayClick);
   }
   const handleEscPress = useCallback((evt) => {
     if (evt.code === 'Escape') {
@@ -66,13 +71,14 @@ function App() {
   }
 
   function openInfoTooltip() {
-    setInfoTooltipOpen(true);
+    setIsInfoTooltipOpen(true);
     const infoTooltipPopup = document.querySelector('.info-tooltip');
     infoTooltipPopup.addEventListener('click', closePopupAtOverlayClick);
   }
 
   function handleLogin() {
     setIsLoggedin(true);
+    setuserName('Грета');
     closeAnyPopup();
   }
   function handleSignUp() {
@@ -87,33 +93,51 @@ function App() {
   function closeAnyPopup() {
     setIsLoginPopupOpen(false);
     setIsSignUpPopupOpen(false);
-    setInfoTooltipOpen(false);
+    setIsInfoTooltipOpen(false);
+    setIsMobileMenuOpen(false);
     removeEventListeners();
+  }
+  /*indian code style = on */
+  function ActivateSavedNews() {
+    setIsSavedNews(true);
+  }
+  function DeactivateSavedNews() {
+    setIsSavedNews(false);
   }
   function removeEventListeners() {
     const popupWithLogin = document.querySelector('.popup_login');
     const popupWithSignup = document.querySelector('.popup_sign-up');
     const infoTooltipPopup = document.querySelector('.info-tooltip');
+    const mobileMenu = document.querySelector('.mobile-menu');
     popupWithLogin.removeEventListener('click', closePopupAtOverlayClick);
     popupWithSignup.removeEventListener('click', closePopupAtOverlayClick);
     infoTooltipPopup.removeEventListener('click', closePopupAtOverlayClick);
+    mobileMenu.removeEventListener('click', closePopupAtOverlayClick);
   }
-
   return (
     <div className="app">
       <Switch>
         <Route exact path="/">
           <Main
+            DeactivateSavedNews={DeactivateSavedNews}
             isLoggedIn={isLoggedIn}
+            userName={userName}
             isMobileMenu={isMobileMenu}
-            isMobileMenuOpen={isMobileMenuOpen}
             handleMobileMenuClick={handleMobileMenuClick}
             loginButtonHandler={loginButtonHandler}
             handleLogout={handleLogout}
           />
         </Route>
         <Route path="/saved-news">
-          <SavedNews isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          <SavedNews
+            isSavedNews={isSavedNews}
+            ActivateSavedNews={ActivateSavedNews}
+            isLoggedIn={isLoggedIn}
+            userName={userName}
+            isMobileMenu={isMobileMenu}
+            handleMobileMenuClick={handleMobileMenuClick}
+            handleLogout={handleLogout}
+          />
         </Route>
       </Switch>
       <PopupLogin
@@ -132,6 +156,15 @@ function App() {
         isOpen={isInfoTooltipOpen}
         onClose={closeAnyPopup}
         onLogin={loginButtonHandler}
+      />
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        isLoggedIn={isLoggedIn}
+        userName={userName}
+        handleLogout={handleLogout}
+        onClose={closeAnyPopup}
+        isSavedNews={isSavedNews}
+        loginButtonHandler={loginButtonHandler}
       />
     </div>
   );

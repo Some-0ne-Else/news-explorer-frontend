@@ -1,11 +1,39 @@
 .main {
   background: url(../../images/main.jpg);
   background-repeat: no-repeat;
+  min-height: 576px;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    background: url(../../images/main_tablet.jpg);
+    min-height: 400px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .main {
+    min-height: 536px;
+  }
 }
 
 .main__wrapper {
   margin: 80px auto 75px;
   max-width: 608px;
+}
+
+@media screen and (max-width: 768px) {
+  .main__wrapper {
+    margin: 38px auto 48px;
+    max-width: 448px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .main__wrapper {
+    margin: 30px 16px 32px 19px;
+    max-width: 448px;
+  }
 }
 .main__title {
   font-family: Roboto Slab;
@@ -14,9 +42,16 @@
   font-size: 60px;
   line-height: 64px;
   color: #ffffff;
-
   margin: 0 auto 0;
   text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+  .main__title {
+    font-size: 36px;
+    line-height: 40px;
+    max-width: 385px;
+  }
 }
 
 .main__subtitle {
@@ -29,4 +64,20 @@
   max-width: 545px;
   margin: 32px 0 64px;
   text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+  .main__subtitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 16px 0 48px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .main__subtitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 16px 0 122px;
+  }
 }
