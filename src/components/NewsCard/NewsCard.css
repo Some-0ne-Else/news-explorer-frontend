@@ -16,7 +16,7 @@
 }
 
 .news-card__keyword {
-  font-family: Roboto;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -32,6 +32,7 @@
   margin: 0;
   transition: ease 0.5s;
 }
+
 @media screen and (max-width: 900px) {
   .news-card__keyword {
     top: 8px;
@@ -39,7 +40,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 510px) {
   .news-card__keyword {
     top: 16px;
     left: 16px;
@@ -70,7 +71,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 510px) {
   .news-card__delete-button {
     top: 16px;
     right: 16px;
@@ -124,7 +125,7 @@
 }
 
 .news-card__date {
-  font-family: Source Sans Pro;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -136,7 +137,7 @@
 }
 
 .news-card__title {
-  font-family: Roboto Slab;
+  font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 26px;
@@ -150,11 +151,15 @@
   .news-card__title {
     font-size: 22px;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
 .news-card__text {
-  font-family: Roboto;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -163,7 +168,7 @@
   margin: 18px 0 0;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1437px) {
   .news-card__text {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -172,8 +177,14 @@
   }
 }
 
+@media screen and (max-width: 1437px) {
+  .news-card__text {
+    margin: 12px 0 0;
+  }
+}
+
 .news-card__source {
-  font-family: Roboto Slab;
+  font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
@@ -182,4 +193,10 @@
   text-transform: uppercase;
   color: #b6bcbf;
   margin: 18px 0 24px 0;
+}
+
+@media screen and (max-width: 900px) {
+  .news-card__source {
+    margin: 12px 0 0 0;
+  }
 }
