@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.db79cb39.chunk.css",
+    "main.js": "/static/js/main.6dac0888.chunk.js",
+    "main.js.map": "/static/js/main.6dac0888.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.18fc895e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.18fc895e.js.map",
+    "static/js/2.0b47adbb.chunk.js": "/static/js/2.0b47adbb.chunk.js",
+    "static/js/2.0b47adbb.chunk.js.map": "/static/js/2.0b47adbb.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.5dcd0e5e29dea005e55a6f0767737b9e.js": "/precache-manifest.5dcd0e5e29dea005e55a6f0767737b9e.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.db79cb39.chunk.css.map": "/static/css/main.db79cb39.chunk.css.map",
+    "static/js/2.0b47adbb.chunk.js.LICENSE.txt": "/static/js/2.0b47adbb.chunk.js.LICENSE.txt",
+    "static/media/author_photo.jpg": "/static/media/author_photo.6a971bbd.jpg",
+    "static/media/InfoTooltip.css": "/static/media/cursor.5b5d3775.svg",
+    "static/media/facebook_logo.svg": "/static/media/facebook_logo.5a290307.svg",
+    "static/media/github_logo.svg": "/static/media/github_logo.b710d332.svg",
+    "static/media/index.css": "/static/media/sourcesanspro-regular.49d8d828.woff",
+    "static/media/Main.css": "/static/media/main_tablet.6828324e.jpg",
+    "static/media/MobileMenu.css": "/static/media/mobile-menu_close-button.9afc0ede.svg",
+    "static/media/NewsCard.css": "/static/media/news-card_trash_active.0236a367.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.18fc895e.js",
+    "static/js/2.0b47adbb.chunk.js",
+    "static/css/main.db79cb39.chunk.css",
+    "static/js/main.6dac0888.chunk.js"
+  ]
+}
