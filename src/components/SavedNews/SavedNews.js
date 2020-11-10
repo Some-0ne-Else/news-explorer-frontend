@@ -25,7 +25,7 @@ function SavedNews({
       date: '2 августа, 2019',
       source: 'Дзен',
       link: 'http://link.ru',
-      image: 'http://ihaveerror.ru/img/card_1.jpg',
+      image: 'https://some0neelse.tk/static/media/card_1.jpg',
       __v: 0,
     },
     {
@@ -37,7 +37,7 @@ function SavedNews({
       date: '2 августа, 2019',
       source: 'Афиша',
       link: 'http://link.ru',
-      image: 'http://ihaveerror.ru/img/card_2.jpg',
+      image: 'https://some0neelse.tk/static/media/card_2.jpg',
       __v: 0,
     },
     {
@@ -49,7 +49,7 @@ function SavedNews({
       date: '2 августа, 2019',
       source: 'Медиазона',
       link: 'http://link.ru',
-      image: 'http://ihaveerror.ru/img/card_3.jpg',
+      image: 'https://some0neelse.tk/static/media/card_3.jpg',
       __v: 0,
     },
     {
@@ -61,7 +61,7 @@ function SavedNews({
       date: '2 августа, 2019',
       source: 'Дзен',
       link: 'http://link.ru',
-      image: 'http://ihaveerror.ru/img/card_1.jpg',
+      image: 'https://some0neelse.tk/static/media/card_1.jpg',
       __v: 0,
     },
     {
@@ -73,7 +73,7 @@ function SavedNews({
       date: '2 августа, 2019',
       source: 'Афиша',
       link: 'http://link.ru',
-      image: 'http://ihaveerror.ru/img/card_2.jpg',
+      image: 'https://some0neelse.tk/static/media/card_2.jpg',
       __v: 0,
     },
   ];
