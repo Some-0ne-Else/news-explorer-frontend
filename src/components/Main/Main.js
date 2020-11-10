@@ -5,7 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 /*FOR DEMO REASONS */
-import SearchResults from '../SearchResults/SearchResults';
+//import SearchResults from '../SearchResults/SearchResults';
 // import Preloader from '../Preloader/Preloader';
 // import NoResults from '../NoResults/NoResults';
 
@@ -44,10 +44,10 @@ function Main({
       </div>
       {/* <Preloader/> */}
       {/* <NoResults/> */}
-      <SearchResults />
+      {/* <SearchResults />*/}
 
-      {/* <About /> */}
-      {/* <Footer /> */}
+      <About />
+      <Footer />
     </section>
   );
 }
