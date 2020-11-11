@@ -124,6 +124,12 @@
   padding: 20px 24px 24px;
 }
 
+@media screen and (max-width: 520px) {
+  .news-card__description-wrapper {
+    padding: 16px;
+  }
+}
+
 .news-card__date {
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-style: normal;

@@ -10,7 +10,7 @@ function SearchForm() {
         required
       ></input>
       <button className="search__button" type="submit">
-        <p className="search__button-text">Искать</p>
+        Искать
       </button>
     </form>
   );
