@@ -20,6 +20,8 @@ function Main({
   const [showSearchResults, setShowSearchResults] = React.useState(false);
   const [resultsArray, setResultsArray] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(3);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isNoResults, setIsNoResults] = React.useState(false);
   const cardsPerStep = 3;
 
   React.useEffect(() => {
@@ -27,11 +29,18 @@ function Main({
   });
 
   function handleSearch(searchStr) {
+    setShowSearchResults(false);
+    setIsNoResults(false);
+    setIsLoading(true);
     newsApi.search(searchStr).then((res) => {
       console.log('res articles', res);
       if (res.articles.length > 0 && res.status === 'ok') {
         setResultsArray(res.articles);
+        setIsLoading(false);
         setShowSearchResults(true);
+      } else {
+        setIsLoading(false);
+        setIsNoResults(true);
       }
     });
   }
@@ -59,7 +68,8 @@ function Main({
         </p>
         <SearchForm handleSearch={handleSearch} />
       </div>
-
+      {isLoading ? <Preloader /> : null}
+      {isNoResults ? <NoResults /> : null}
       {showSearchResults ? (
         <SearchResults
           resultsArray={resultsArray}

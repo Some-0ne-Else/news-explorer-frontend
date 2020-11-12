@@ -8,6 +8,7 @@ import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupSignup from '../PopupSignup/PopupSignup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import MobileMenu from '../MobileMenu/MobileMenu';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import api from '../../utils/MainApi';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
+
   const history = useHistory();
 
   React.useEffect(() => {
@@ -147,16 +149,16 @@ function App() {
               handleLogout={handleLogout}
             />
           </Route>
-          <Route path="/saved-news">
-            <SavedNews
-              isSavedNews={isSavedNews}
-              ActivateSavedNews={ActivateSavedNews}
-              isLoggedIn={isLoggedIn}
-              isMobileMenu={isMobileMenu}
-              handleMobileMenuClick={handleMobileMenuClick}
-              handleLogout={handleLogout}
-            />
-          </Route>
+          <ProtectedRoute
+            isLoggedIn={isLoggedIn}
+            path="/saved-news"
+            isSavedNews={isSavedNews}
+            ActivateSavedNews={ActivateSavedNews}
+            isMobileMenu={isMobileMenu}
+            handleMobileMenuClick={handleMobileMenuClick}
+            handleLogout={handleLogout}
+            component={SavedNews}
+          />
         </Switch>
         <PopupLogin
           isLoginPopupOpen={isLoginPopupOpen}

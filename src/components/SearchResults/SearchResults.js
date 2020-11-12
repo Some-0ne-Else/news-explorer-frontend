@@ -8,16 +8,15 @@ function SearchResults({ resultsArray, currentIndex, loadMoreHandler }) {
 
   React.useEffect(() => {
     if (resultsArray.length <= currentIndex) {
-      console.log('finish');
       setshowLoadMore(false);
-    }
-  }, [currentIndex]);
+    } else setshowLoadMore(true);
+  }, [currentIndex, resultsArray.length]);
 
   return (
     <section className="search-results">
       <h2 className="search-results__title">Результаты поиска</h2>
       <NewsCardList cards={cardsToRender} isSearchCard={true} />
-      {(
+      {showLoadMore ? (
         <button
           type="button"
           onClick={loadMoreHandler}
@@ -25,7 +24,7 @@ function SearchResults({ resultsArray, currentIndex, loadMoreHandler }) {
         >
           Показать еще
         </button>
-      ) && showLoadMore}
+      ) : null}
     </section>
   );
 }
