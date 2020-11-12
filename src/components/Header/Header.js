@@ -5,7 +5,6 @@ import Navigation from '../Navigation/Navigation';
 
 function Header({
   isLoggedIn,
-  userName,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
@@ -31,7 +30,6 @@ function Header({
           isMobileMenu={isMobileMenu}
           handleMobileMenuClick={handleMobileMenuClick}
           isSavedNews={isSavedNews}
-          userName={userName}
           loginButtonHandler={loginButtonHandler}
           handleLogout={handleLogout}
         />

@@ -9,7 +9,6 @@ function SavedNews({
   ActivateSavedNews,
   isSavedNews,
   isLoggedIn,
-  userName,
   isMobileMenu,
   handleMobileMenuClick,
   handleLogout,
@@ -86,12 +85,11 @@ function SavedNews({
       <Header
         isSavedNews={isSavedNews}
         isLoggedIn={isLoggedIn}
-        userName={userName}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
       />
-      <SavedNewsHeader userName={userName} keywordsArray={keywordsArray} />
+      <SavedNewsHeader keywordsArray={keywordsArray} />
       <NewsCardList cards={cards} />
       <Footer />
     </section>

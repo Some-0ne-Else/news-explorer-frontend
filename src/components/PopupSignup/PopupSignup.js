@@ -1,16 +1,37 @@
 import React from 'react';
 import './PopupSignup.css';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import api from '../../utils/MainApi';
 
 function PopupSignup({
   isSignUpPopupOpen,
   loginButtonHandler,
   onClose,
-  onSubmit,
+  handleSignUp,
 }) {
+  const emailRef = React.useRef('');
+  const passwordRef = React.useRef('');
+  const nameRef = React.useRef('');
+
+  function handleEmailChange(e) {
+    emailRef.current = e.target.value;
+  }
+
+  function handlePasswordChange(e) {
+    passwordRef.current = e.target.value;
+  }
+
+  function handleNameChange(e) {
+    nameRef.current = e.target.value;
+  }
+
   function submitHandler(e) {
     e.preventDefault();
-    onSubmit();
+    api
+      .signUp(emailRef.current, passwordRef.current, nameRef.current)
+      .then((res) => {
+        res.email ? handleSignUp() : console.log(res);
+      });
   }
   return (
     <PopupWithForm
@@ -31,6 +52,7 @@ function PopupSignup({
         id="email-signup"
         placeholder="Введите почту"
         required
+        onChange={handleEmailChange}
       />
       <p className="popup__caption">Пароль</p>
       <input
@@ -40,6 +62,7 @@ function PopupSignup({
         id="password-signup"
         placeholder="Введите пароль"
         required
+        onChange={handlePasswordChange}
       />
       <p className="popup__caption">Имя</p>
       <input
@@ -49,6 +72,7 @@ function PopupSignup({
         id="name"
         placeholder="Введите своё имя"
         required
+        onChange={handleNameChange}
       />
     </PopupWithForm>
   );

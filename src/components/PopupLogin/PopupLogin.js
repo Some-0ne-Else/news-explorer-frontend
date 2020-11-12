@@ -1,17 +1,38 @@
 import React from 'react';
 import './PopupLogin.css';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import api from '../../utils/MainApi';
 
 function PopupLogin({
   isLoginPopupOpen,
   registerButtonHandler,
   onClose,
-  onSubmit,
+  onLogin,
+  onAuthFail,
 }) {
+  const emailRef = React.useRef('');
+  const passwordRef = React.useRef('');
+
+  function handleEmailChange(e) {
+    emailRef.current = e.target.value;
+  }
+
+  function handlePasswordChange(e) {
+    passwordRef.current = e.target.value;
+  }
+
   function submitHandler(e) {
     e.preventDefault();
-    onSubmit();
+    api.signIn(emailRef.current, passwordRef.current).then((res) => {
+      if (res.token) {
+        localStorage.setItem('jwt', res.token);
+        api.checkToken(res.token).then((res) => {
+          onLogin(res.data.name);
+        });
+      } else onAuthFail();
+    });
   }
+
   return (
     <PopupWithForm
       name="login"
@@ -31,6 +52,7 @@ function PopupLogin({
         id="email"
         placeholder="Введите почту"
         required
+        onChange={handleEmailChange}
       />
       <p className="popup__caption">Пароль</p>
       <input
@@ -40,6 +62,7 @@ function PopupLogin({
         id="password"
         placeholder="Введите пароль"
         required
+        onChange={handlePasswordChange}
       />
     </PopupWithForm>
   );

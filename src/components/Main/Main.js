@@ -4,30 +4,47 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
-/*FOR DEMO REASONS */
 import SearchResults from '../SearchResults/SearchResults';
 import Preloader from '../Preloader/Preloader';
 import NoResults from '../NoResults/NoResults';
+import newsApi from '../../utils/NewsApi';
 
 function Main({
   DeactivateSavedNews,
   isLoggedIn,
-  userName,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
 }) {
+  const [showSearchResults, setShowSearchResults] = React.useState(false);
+  const [resultsArray, setResultsArray] = React.useState([]);
+  const [currentIndex, setCurrentIndex] = React.useState(3);
+  const cardsPerStep = 3;
+
   React.useEffect(() => {
     DeactivateSavedNews();
   });
+
+  function handleSearch(searchStr) {
+    newsApi.search(searchStr).then((res) => {
+      console.log('res articles', res);
+      if (res.articles.length > 0 && res.status === 'ok') {
+        setResultsArray(res.articles);
+        setShowSearchResults(true);
+      }
+    });
+  }
+
+  function loadMore() {
+    setCurrentIndex(currentIndex + cardsPerStep);
+  }
 
   return (
     <section className="main">
       <Header
         DeactivateSavedNews={DeactivateSavedNews}
         isLoggedIn={isLoggedIn}
-        userName={userName}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
@@ -40,12 +57,16 @@ function Main({
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        <SearchForm />
+        <SearchForm handleSearch={handleSearch} />
       </div>
-      {/* <Preloader/> */}
-      {/* <NoResults/> */}
-      <SearchResults />
 
+      {showSearchResults ? (
+        <SearchResults
+          resultsArray={resultsArray}
+          currentIndex={currentIndex}
+          loadMoreHandler={loadMore}
+        />
+      ) : null}
       <About />
       <Footer />
     </section>

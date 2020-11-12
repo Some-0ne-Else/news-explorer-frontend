@@ -1,14 +1,17 @@
 import React, { useCallback } from 'react';
 import './App.css';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupSignup from '../PopupSignup/PopupSignup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import MobileMenu from '../MobileMenu/MobileMenu';
+import api from '../../utils/MainApi';
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState('');
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
@@ -16,7 +19,6 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
-  const [userName, setuserName] = React.useState('');
   const history = useHistory();
 
   React.useEffect(() => {
@@ -56,6 +58,15 @@ function App() {
     }
   }
 
+  React.useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      api.checkToken(localStorage.getItem('jwt')).then((res) => {
+        handleLogin(res.data.name);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function loginButtonHandler() {
     closeAnyPopup();
     setIsLoginPopupOpen(true);
@@ -76,17 +87,25 @@ function App() {
     infoTooltipPopup.addEventListener('click', closePopupAtOverlayClick);
   }
 
-  function handleLogin() {
+  function handleLogin(name) {
     setIsLoggedin(true);
-    setuserName('Грета');
+    setCurrentUser(name);
     closeAnyPopup();
   }
+
+  function onOperationFail() {
+    console.log('Ups we failed');
+  }
+
   function handleSignUp() {
     setIsSignUpPopupOpen(false);
     openInfoTooltip();
   }
+
   function handleLogout() {
     setIsLoggedin(false);
+    setCurrentUser('');
+    localStorage.removeItem('jwt');
     history.push('/');
   }
 
@@ -115,58 +134,58 @@ function App() {
     mobileMenu.removeEventListener('click', closePopupAtOverlayClick);
   }
   return (
-    <div className="app">
-      <Switch>
-        <Route exact path="/">
-          <Main
-            DeactivateSavedNews={DeactivateSavedNews}
-            isLoggedIn={isLoggedIn}
-            userName={userName}
-            isMobileMenu={isMobileMenu}
-            handleMobileMenuClick={handleMobileMenuClick}
-            loginButtonHandler={loginButtonHandler}
-            handleLogout={handleLogout}
-          />
-        </Route>
-        <Route path="/saved-news">
-          <SavedNews
-            isSavedNews={isSavedNews}
-            ActivateSavedNews={ActivateSavedNews}
-            isLoggedIn={isLoggedIn}
-            userName={userName}
-            isMobileMenu={isMobileMenu}
-            handleMobileMenuClick={handleMobileMenuClick}
-            handleLogout={handleLogout}
-          />
-        </Route>
-      </Switch>
-      <PopupLogin
-        isLoginPopupOpen={isLoginPopupOpen}
-        registerButtonHandler={registerButtonHandler}
-        onClose={closeAnyPopup}
-        onSubmit={handleLogin}
-      />
-      <PopupSignup
-        isSignUpPopupOpen={isSignUpPopupOpen}
-        loginButtonHandler={loginButtonHandler}
-        onClose={closeAnyPopup}
-        onSubmit={handleSignUp}
-      />
-      <InfoTooltip
-        isOpen={isInfoTooltipOpen}
-        onClose={closeAnyPopup}
-        onLogin={loginButtonHandler}
-      />
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        isLoggedIn={isLoggedIn}
-        userName={userName}
-        handleLogout={handleLogout}
-        onClose={closeAnyPopup}
-        isSavedNews={isSavedNews}
-        loginButtonHandler={loginButtonHandler}
-      />
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        <Switch>
+          <Route exact path="/">
+            <Main
+              DeactivateSavedNews={DeactivateSavedNews}
+              isLoggedIn={isLoggedIn}
+              isMobileMenu={isMobileMenu}
+              handleMobileMenuClick={handleMobileMenuClick}
+              loginButtonHandler={loginButtonHandler}
+              handleLogout={handleLogout}
+            />
+          </Route>
+          <Route path="/saved-news">
+            <SavedNews
+              isSavedNews={isSavedNews}
+              ActivateSavedNews={ActivateSavedNews}
+              isLoggedIn={isLoggedIn}
+              isMobileMenu={isMobileMenu}
+              handleMobileMenuClick={handleMobileMenuClick}
+              handleLogout={handleLogout}
+            />
+          </Route>
+        </Switch>
+        <PopupLogin
+          isLoginPopupOpen={isLoginPopupOpen}
+          registerButtonHandler={registerButtonHandler}
+          onClose={closeAnyPopup}
+          onLogin={handleLogin}
+          onAuthFail={onOperationFail}
+        />
+        <PopupSignup
+          isSignUpPopupOpen={isSignUpPopupOpen}
+          loginButtonHandler={loginButtonHandler}
+          onClose={closeAnyPopup}
+          handleSignUp={handleSignUp}
+        />
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAnyPopup}
+          onLogin={loginButtonHandler}
+        />
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          isLoggedIn={isLoggedIn}
+          handleLogout={handleLogout}
+          onClose={closeAnyPopup}
+          isSavedNews={isSavedNews}
+          loginButtonHandler={loginButtonHandler}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
