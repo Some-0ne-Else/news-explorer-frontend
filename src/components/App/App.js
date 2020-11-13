@@ -108,6 +108,7 @@ function App() {
     setIsLoggedin(false);
     setCurrentUser('');
     localStorage.removeItem('jwt');
+    localStorage.removeItem('searchResult');
     history.push('/');
   }
 

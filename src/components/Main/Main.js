@@ -28,6 +28,12 @@ function Main({
     DeactivateSavedNews();
   });
 
+  React.useEffect(() => {
+    if (localStorage.getItem('searchResult')) {
+      setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
+      setShowSearchResults(true);
+    }
+  }, []);
   function handleSearch(searchStr) {
     setShowSearchResults(false);
     setIsNoResults(false);
@@ -35,6 +41,7 @@ function Main({
     newsApi.search(searchStr).then((res) => {
       console.log('res articles', res);
       if (res.articles.length > 0 && res.status === 'ok') {
+        localStorage.setItem('searchResult', JSON.stringify(res.articles));
         setResultsArray(res.articles);
         setIsLoading(false);
         setShowSearchResults(true);
@@ -72,6 +79,7 @@ function Main({
       {isNoResults ? <NoResults /> : null}
       {showSearchResults ? (
         <SearchResults
+          isLoggedIn={isLoggedIn}
           resultsArray={resultsArray}
           currentIndex={currentIndex}
           loadMoreHandler={loadMore}

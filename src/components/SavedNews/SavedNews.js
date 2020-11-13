@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
+import api from '../../utils/MainApi';
 
 function SavedNews({
   ActivateSavedNews,
@@ -13,6 +14,13 @@ function SavedNews({
   handleMobileMenuClick,
   handleLogout,
 }) {
+  const [resultArray, setResultArray] = React.useState([]);
+
+  React.useEffect(() => {
+    api.getArticles(localStorage.getItem('jwt')).then((res) => {
+      setResultArray(res.data);
+    });
+  }, []);
   const keywordsArray = ['Природа', 'Тайга', 'еще один', 'еще один'];
   const cards = [
     {
@@ -90,7 +98,7 @@ function SavedNews({
         handleLogout={handleLogout}
       />
       <SavedNewsHeader keywordsArray={keywordsArray} />
-      <NewsCardList cards={cards} />
+      <NewsCardList cards={resultArray} isLoggedIn={isLoggedIn} />
       <Footer />
     </section>
   );

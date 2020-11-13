@@ -57,6 +57,25 @@ class Api {
         console.log(err);
       });
   }
+
+  getArticles(jwt) {
+    return fetch(`${this._baseUrl}/articles`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((result) => {
+        if (result.ok) {
+          return result.json();
+        } else {
+          return Promise.reject(`Ошибка: ${result.status}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 const api = new Api(baseUrl, token);

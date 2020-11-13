@@ -2,7 +2,13 @@ import React from 'react';
 import './SearchResults.css';
 import NewsCardList from '../NewsCardList/NewsCardList';
 
-function SearchResults({ resultsArray, currentIndex, loadMoreHandler }) {
+function SearchResults({
+  resultsArray,
+  currentIndex,
+  loadMoreHandler,
+  isLoggedIn,
+}) {
+  console.log('SearchResults', isLoggedIn);
   const [showLoadMore, setshowLoadMore] = React.useState(true);
   const cardsToRender = resultsArray.slice(0, currentIndex);
 
@@ -15,7 +21,11 @@ function SearchResults({ resultsArray, currentIndex, loadMoreHandler }) {
   return (
     <section className="search-results">
       <h2 className="search-results__title">Результаты поиска</h2>
-      <NewsCardList cards={cardsToRender} isSearchCard={true} />
+      <NewsCardList
+        cards={cardsToRender}
+        isSearchCard={true}
+        isLoggedIn={isLoggedIn}
+      />
       {showLoadMore ? (
         <button
           type="button"

@@ -1,12 +1,29 @@
 import React from 'react';
+
 import './NewsCard.css';
 
-function NewsCard({ keyword, title, text, date, source, image, isSearchCard }) {
+function NewsCard({
+  keyword,
+  title,
+  text,
+  date,
+  source,
+  image,
+  isSearchCard,
+  isLoggedIn,
+  handleBookmarkButton,
+}) {
+  console.log('NewsCard', isLoggedIn);
+
   if (isSearchCard) {
     return (
       <div className="news-card">
         <div className="news-card__image-wrapper">
-          <button className="news-card__bookmark-button"></button>
+          <button
+            type="button"
+            onClick={handleBookmarkButton}
+            className="news-card__bookmark-button"
+          ></button>
           <img className="news-card__image" src={image} alt={title} />
         </div>
         <div className="news-card__description-wrapper">
@@ -22,7 +39,7 @@ function NewsCard({ keyword, title, text, date, source, image, isSearchCard }) {
     <div className="news-card">
       <div className="news-card__image-wrapper">
         <p className="news-card__keyword">{keyword}</p>
-        <button className="news-card__delete-button"></button>
+        <button type="button" className="news-card__delete-button"></button>
         <img className="news-card__image" src={image} alt={title} />
       </div>
       <div className="news-card__description-wrapper">
