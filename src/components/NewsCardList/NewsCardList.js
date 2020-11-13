@@ -2,29 +2,12 @@ import React from 'react';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
 
-function NewsCardList({ cards, isSearchCard, isLoggedIn }) {
+function NewsCardList({ cards, setResultArray, isSearchCard, isLoggedIn }) {
   console.log('NewsCardList', isLoggedIn);
-  function changeDateFormat(dateString) {
-    const date = new Date(dateString);
-    const monthNames = [
-      'января',
-      'февраля',
-      'марта',
-      'апреля',
-      'мая',
-      'июня',
-      'июля',
-      'августа',
-      'сентября',
-      'октября',
-      'ноября',
-      'декабря',
-    ];
-    const day = date.getDate();
-    const monthIndex = date.getMonth();
-    const monthName = monthNames[monthIndex];
-    const year = date.getFullYear();
-    return `${day} ${monthName} ${year}`;
+
+  function deleteButtonHandler(id) {
+    console.log('id to del', id);
+    setResultArray(cards.filter((c) => c._id !== id));
   }
   if (isSearchCard) {
     return (
@@ -35,9 +18,10 @@ function NewsCardList({ cards, isSearchCard, isLoggedIn }) {
             keyword={card.keyword}
             title={card.title}
             text={card.description}
-            date={changeDateFormat(card.publishedAt)}
+            date={card.publishedAt}
             image={card.urlToImage}
             source={card.source.name}
+            link={card.url}
             key={index}
             isSearchCard={isSearchCard}
           />
@@ -47,17 +31,19 @@ function NewsCardList({ cards, isSearchCard, isLoggedIn }) {
   }
   return (
     <section className="news-card-list">
-      {cards.map((card, index) => (
+      {cards.map((card) => (
         <NewsCard
           isLoggedIn={isLoggedIn}
           keyword={card.keyword}
           title={card.title}
           text={card.text}
-          date={changeDateFormat(card.date)}
+          date={card.date}
           image={card.image}
           source={card.source}
-          key={index}
+          key={card._id}
+          id={card._id}
           isSearchCard={isSearchCard}
+          deleteButtonHandler={deleteButtonHandler}
         />
       ))}
     </section>

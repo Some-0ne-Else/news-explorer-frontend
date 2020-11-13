@@ -76,6 +76,41 @@ class Api {
         console.log(err);
       });
   }
+
+  postArticle(jwt, keyword, title, text, date, source, link, image) {
+    return fetch(`${this._baseUrl}/articles`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        keyword: `${keyword}`,
+        title: `${title}`,
+        text: `${text}`,
+        date: `${date}`,
+        source: `${source}`,
+        link: `${link}`,
+        image: `${image}`,
+      }),
+    })
+      .then((result) => result.json())
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  deleteArticle(jwt, id) {
+    return fetch(`${this._baseUrl}/articles/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
 }
 
 const api = new Api(baseUrl, token);
