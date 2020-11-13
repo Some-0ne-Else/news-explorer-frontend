@@ -40,6 +40,7 @@ function SavedNews({
       <NewsCardList
         cards={resultArray}
         setResultArray={setResultArray}
+        savedArticles={resultArray}
         isLoggedIn={isLoggedIn}
       />
       <Footer />

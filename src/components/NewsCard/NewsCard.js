@@ -14,9 +14,27 @@ function NewsCard({
   image,
   isSearchCard,
   isLoggedIn,
-  deleteButtonHandler,
+  handleArrayChange,
+  savedArticles,
+  lastSearchRequest,
 }) {
   console.log('NewsCard', isLoggedIn);
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const [savedId, setSavedId] = React.useState('');
+
+  React.useEffect(() => {
+    if (isSearchCard) {
+      let article;
+      if (savedArticles.hasOwnProperty('data')) {
+        article = savedArticles.data.find((article) => article.link === link);
+      }
+      if (article) {
+        console.log(article._id);
+        setIsBookmarked(true);
+        setSavedId(article._id);
+      }
+    }
+  }, [savedArticles, link, isSearchCard]);
 
   function changeDateFormat(dateString) {
     const date = new Date(dateString);
@@ -42,25 +60,39 @@ function NewsCard({
   }
 
   function handleBookmarkButton() {
-    api.postArticle(
-      localStorage.getItem('jwt'),
-      'keyword-test',
-      title,
-      text,
-      date,
-      source,
-      link,
-      image,
-    );
+    if (!isBookmarked) {
+      api
+        .postArticle(
+          localStorage.getItem('jwt'),
+          lastSearchRequest,
+          title,
+          text,
+          date,
+          source,
+          link,
+          image,
+        )
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            setIsBookmarked(true);
+            setSavedId(res.data._id);
+          }
+        });
+    } else {
+      api.deleteArticle(localStorage.getItem('jwt'), savedId).then((res) => {
+        console.log(savedId);
+        setIsBookmarked(false);
+      });
+    }
   }
 
   function handleDeleteButton() {
-    console.log('click');
     console.log(id);
     api.deleteArticle(localStorage.getItem('jwt'), id).then((res) => {
       console.log(res);
       if (res.ok) {
-        deleteButtonHandler(id);
+        handleArrayChange(id);
       }
     });
   }
@@ -72,7 +104,11 @@ function NewsCard({
           <button
             type="button"
             onClick={handleBookmarkButton}
-            className="news-card__bookmark-button"
+            className={
+              isBookmarked
+                ? 'news-card__bookmark-button news-card__bookmark-button_marked'
+                : 'news-card__bookmark-button'
+            }
           ></button>
           <img className="news-card__image" src={image} alt={title} />
         </div>

@@ -2,13 +2,19 @@ import React from 'react';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
 
-function NewsCardList({ cards, setResultArray, isSearchCard, isLoggedIn }) {
-  console.log('NewsCardList', isLoggedIn);
-
-  function deleteButtonHandler(id) {
+function NewsCardList({
+  cards,
+  savedArticles,
+  setResultArray,
+  lastSearchRequest,
+  isSearchCard,
+  isLoggedIn,
+}) {
+  function handleArrayChange(id) {
     console.log('id to del', id);
     setResultArray(cards.filter((c) => c._id !== id));
   }
+
   if (isSearchCard) {
     return (
       <section className="news-card-list">
@@ -23,6 +29,8 @@ function NewsCardList({ cards, setResultArray, isSearchCard, isLoggedIn }) {
             source={card.source.name}
             link={card.url}
             key={index}
+            savedArticles={savedArticles}
+            lastSearchRequest={lastSearchRequest}
             isSearchCard={isSearchCard}
           />
         ))}
@@ -43,7 +51,7 @@ function NewsCardList({ cards, setResultArray, isSearchCard, isLoggedIn }) {
           key={card._id}
           id={card._id}
           isSearchCard={isSearchCard}
-          deleteButtonHandler={deleteButtonHandler}
+          handleArrayChange={handleArrayChange}
         />
       ))}
     </section>

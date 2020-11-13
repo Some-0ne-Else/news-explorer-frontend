@@ -4,6 +4,8 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 
 function SearchResults({
   resultsArray,
+  savedArticles,
+  lastSearchRequest,
   currentIndex,
   loadMoreHandler,
   isLoggedIn,
@@ -23,6 +25,8 @@ function SearchResults({
       <h2 className="search-results__title">Результаты поиска</h2>
       <NewsCardList
         cards={cardsToRender}
+        savedArticles={savedArticles}
+        lastSearchRequest={lastSearchRequest}
         isSearchCard={true}
         isLoggedIn={isLoggedIn}
       />

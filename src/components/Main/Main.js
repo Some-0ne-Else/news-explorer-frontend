@@ -8,6 +8,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import Preloader from '../Preloader/Preloader';
 import NoResults from '../NoResults/NoResults';
 import newsApi from '../../utils/NewsApi';
+import api from '../../utils/MainApi';
 
 function Main({
   DeactivateSavedNews,
@@ -16,9 +17,12 @@ function Main({
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
+  lastSearchRequest,
+  setLastSearchRequest,
 }) {
   const [showSearchResults, setShowSearchResults] = React.useState(false);
   const [resultsArray, setResultsArray] = React.useState([]);
+  const [savedArticles, setSavedArticles] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(3);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isNoResults, setIsNoResults] = React.useState(false);
@@ -32,12 +36,18 @@ function Main({
     if (localStorage.getItem('searchResult')) {
       setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
       setShowSearchResults(true);
+      api.getArticles(localStorage.getItem('jwt')).then((res) => {
+        console.log('SavedArticles', res);
+        setSavedArticles(res);
+      });
     }
   }, []);
+
   function handleSearch(searchStr) {
     setShowSearchResults(false);
     setIsNoResults(false);
     setIsLoading(true);
+    setLastSearchRequest(searchStr);
     newsApi.search(searchStr).then((res) => {
       console.log('res articles', res);
       if (res.articles.length > 0 && res.status === 'ok') {
@@ -81,6 +91,8 @@ function Main({
         <SearchResults
           isLoggedIn={isLoggedIn}
           resultsArray={resultsArray}
+          savedArticles={savedArticles}
+          lastSearchRequest={lastSearchRequest}
           currentIndex={currentIndex}
           loadMoreHandler={loadMore}
         />

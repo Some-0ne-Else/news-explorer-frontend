@@ -14,7 +14,7 @@
   border-radius: 16px 16px 0 0;
   width: 100%;
   height: 272px;
-  object-fit: cover;
+  object-fit: fill;
 }
 @media screen and (max-width: 768px) {
   .news-card__image {
@@ -127,6 +127,10 @@
 .news-card__bookmark-button:hover {
   cursor: url('../../images/cursor.svg'), auto;
   background-image: url('../../images/news-card_bookmark_active.svg');
+}
+
+.news-card__bookmark-button_marked {
+  background-image: url('../../images/news-card_bookmark_marked.svg');
 }
 
 .news-card__description-wrapper {

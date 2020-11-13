@@ -20,7 +20,7 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
-
+  const [lastSearchRequest, setLastSearchRequest] = React.useState('');
   const history = useHistory();
 
   React.useEffect(() => {
@@ -148,6 +148,8 @@ function App() {
               handleMobileMenuClick={handleMobileMenuClick}
               loginButtonHandler={loginButtonHandler}
               handleLogout={handleLogout}
+              lastSearchRequest={lastSearchRequest}
+              setLastSearchRequest={setLastSearchRequest}
             />
           </Route>
           <ProtectedRoute
