@@ -21,6 +21,7 @@ function App() {
   const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
   const [lastSearchRequest, setLastSearchRequest] = React.useState('');
+
   const history = useHistory();
 
   React.useEffect(() => {

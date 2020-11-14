@@ -11,7 +11,7 @@ class NewsApi {
     return fetch(
       `${
         this._baseNewsUrl
-      }q=${searchString}&from=${this._weekAgo.toISOString()}&to=${this._today.toISOString()}&country=ru&sortBy=popularity&pageSize=100&apiKey=${
+      }q=${searchString}&from=${this._weekAgo.toISOString()}&to=${this._today.toISOString()}&sortBy=popularity&pageSize=100&apiKey=${
         this._apiKey
       }`,
       {

@@ -5,14 +5,14 @@ import NewsCard from '../NewsCard/NewsCard';
 function NewsCardList({
   cards,
   savedArticles,
-  setResultArray,
+  setSavedNewsArticles,
   lastSearchRequest,
   isSearchCard,
   isLoggedIn,
 }) {
   function handleArrayChange(id) {
     console.log('id to del', id);
-    setResultArray(cards.filter((c) => c._id !== id));
+    setSavedNewsArticles(cards.filter((c) => c._id !== id));
   }
 
   if (isSearchCard) {

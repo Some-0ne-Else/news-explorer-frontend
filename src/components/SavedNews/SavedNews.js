@@ -14,17 +14,44 @@ function SavedNews({
   handleMobileMenuClick,
   handleLogout,
 }) {
-  const [resultArray, setResultArray] = React.useState([]);
-  console.log('here', resultArray);
+  const [savedNewsArticles, setSavedNewsArticles] = React.useState([]);
+  const [statArray, setStatArray] = React.useState([
+    { keyword: 'test', counter: 3 },
+    { keyword: 'test', counter: 5 },
+  ]);
+
   React.useEffect(() => {
     api.getArticles(localStorage.getItem('jwt')).then((res) => {
-      setResultArray(res.data);
+      setSavedNewsArticles(res.data);
+      setStatArray(countWords(res.data));
     });
   }, []);
 
   React.useEffect(() => {
     ActivateSavedNews();
   }, [ActivateSavedNews]);
+
+  function countWords(arr) {
+    let resultArr = [];
+    let index = -1;
+    for (let i = 0; i < arr.length; i++) {
+      let acc = 0;
+      if (resultArr.find((el) => el.keyword === arr[i].keyword)) {
+        continue;
+      } // if keyword already checked, then skiping it
+      for (let j = 0; j < arr.length; j++) {
+        if (arr[i].keyword === arr[j].keyword) acc++;
+        if (j === arr.length - 1) {
+          index += 1;
+        }
+      }
+      resultArr[index] = { keyword: arr[i].keyword, counter: acc };
+    }
+    resultArr.sort(function (a, b) {
+      return b.counter - a.counter;
+    });
+    return resultArr;
+  }
 
   return (
     <section className="saved-news">
@@ -35,11 +62,11 @@ function SavedNews({
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
       />
-      <SavedNewsHeader keywordsArray={resultArray} />
+      <SavedNewsHeader resultArray={savedNewsArticles} statArray={statArray} />
       <NewsCardList
-        cards={resultArray}
-        setResultArray={setResultArray}
-        savedArticles={resultArray}
+        cards={savedNewsArticles}
+        setSavedNewsArticles={setSavedNewsArticles}
+        savedArticles={savedNewsArticles}
         isLoggedIn={isLoggedIn}
       />
       <Footer />
