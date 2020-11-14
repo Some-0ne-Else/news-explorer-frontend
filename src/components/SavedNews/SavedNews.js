@@ -15,7 +15,7 @@ function SavedNews({
   handleLogout,
 }) {
   const [resultArray, setResultArray] = React.useState([]);
-
+  console.log('here', resultArray);
   React.useEffect(() => {
     api.getArticles(localStorage.getItem('jwt')).then((res) => {
       setResultArray(res.data);
@@ -36,7 +36,7 @@ function SavedNews({
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
       />
-      <SavedNewsHeader keywordsArray={keywordsArray} />
+      <SavedNewsHeader keywordsArray={resultArray} />
       <NewsCardList
         cards={resultArray}
         setResultArray={setResultArray}
