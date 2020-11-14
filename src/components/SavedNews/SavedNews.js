@@ -21,7 +21,7 @@ function SavedNews({
       setResultArray(res.data);
     });
   }, []);
-
+  const somevar = 'for test commit';
   React.useEffect(() => {
     ActivateSavedNews();
   }, [ActivateSavedNews]);
