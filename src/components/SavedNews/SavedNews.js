@@ -21,7 +21,6 @@ function SavedNews({
       setResultArray(res.data);
     });
   }, []);
-  const keywordsArray = ['Природа', 'Тайга', 'еще один', 'еще один'];
 
   React.useEffect(() => {
     ActivateSavedNews();
