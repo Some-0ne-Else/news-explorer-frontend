@@ -85,7 +85,7 @@
   }
 }
 
-.popup__action-button_inactive {
+.popup__action-button:disabled {
   background: #e6e8eb;
   color: #b6bcbf;
 }

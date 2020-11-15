@@ -11,6 +11,7 @@ function PopupWithForm({
   children,
   buttonName,
   buttonHandler,
+  isValid,
 }) {
   return (
     <section className={`popup popup_${name} ${isOpen && 'popup_opened'}`}>
@@ -26,16 +27,25 @@ function PopupWithForm({
           onClick={onClose}
         ></button>
         {children}
+        {isValid ? (
+          <button
+            type="submit"
+            className={`popup__action-button popup__action-button_${name}`}
+          >
+            {actionCaption}
+          </button>
+        ) : (
+          <button
+            disabled
+            type="submit"
+            className={`popup__action-button popup__action-button_${name}`}
+          >
+            {actionCaption}
+          </button>
+        )}
 
-        <button
-          type="submit"
-          className={`popup__action-button popup__action-button_${name}`}
-        >
-          {actionCaption}
-        </button>
         <p className="popup__option">
-          {' '}
-          или{' '}
+          или
           <button
             type="button"
             onClick={buttonHandler}

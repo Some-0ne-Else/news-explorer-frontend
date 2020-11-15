@@ -2,6 +2,7 @@ import React from 'react';
 import './PopupSignup.css';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import api from '../../utils/MainApi';
+import { useFormWithValidation } from '../Validation/Validation';
 
 function PopupSignup({
   isSignUpPopupOpen,
@@ -9,6 +10,9 @@ function PopupSignup({
   onClose,
   handleSignUp,
 }) {
+  const SignupFormValidation = useFormWithValidation();
+  const [actionError, setActionError] = React.useState('');
+
   const emailRef = React.useRef('');
   const passwordRef = React.useRef('');
   const nameRef = React.useRef('');
@@ -54,6 +58,9 @@ function PopupSignup({
         required
         onChange={handleEmailChange}
       />
+      <p className="popup__input-error" name="email-error">
+        {loginFormValidation.errors.email}
+      </p>
       <p className="popup__caption">Пароль</p>
       <input
         type="password"

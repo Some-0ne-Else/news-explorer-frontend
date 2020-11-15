@@ -49,9 +49,9 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    document.addEventListener('keydown', handleEscPress, false);
+    document.addEventListener('keyup', handleEscPress, false);
     return () => {
-      document.removeEventListener('keydown', handleEscPress, false);
+      document.removeEventListener('keyup', handleEscPress, false);
     };
   }, [handleEscPress]);
 
@@ -74,30 +74,26 @@ function App() {
     closeAnyPopup();
     setIsLoginPopupOpen(true);
     const popupWithLogin = document.querySelector('.popup_login');
-    popupWithLogin.addEventListener('click', closePopupAtOverlayClick);
+    popupWithLogin.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
   function registerButtonHandler() {
     closeAnyPopup();
     setIsSignUpPopupOpen(true);
     const popupWithSignup = document.querySelector('.popup_sign-up');
-    popupWithSignup.addEventListener('click', closePopupAtOverlayClick);
+    popupWithSignup.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
   function openInfoTooltip() {
     setIsInfoTooltipOpen(true);
     const infoTooltipPopup = document.querySelector('.info-tooltip');
-    infoTooltipPopup.addEventListener('click', closePopupAtOverlayClick);
+    infoTooltipPopup.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
   function handleLogin(name) {
     setIsLoggedin(true);
     setCurrentUser(name);
     closeAnyPopup();
-  }
-
-  function onOperationFail() {
-    console.log('Ups we failed');
   }
 
   function handleSignUp() {
@@ -120,7 +116,7 @@ function App() {
     setIsMobileMenuOpen(false);
     removeEventListeners();
   }
-  /*indian code style = on */
+
   function ActivateSavedNews() {
     setIsSavedNews(true);
   }
@@ -169,7 +165,6 @@ function App() {
           registerButtonHandler={registerButtonHandler}
           onClose={closeAnyPopup}
           onLogin={handleLogin}
-          onAuthFail={onOperationFail}
         />
         <PopupSignup
           isSignUpPopupOpen={isSignUpPopupOpen}
