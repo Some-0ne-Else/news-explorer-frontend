@@ -7,8 +7,6 @@ class Api {
   }
 
   signIn(email, password) {
-    console.log(email);
-    console.log(password);
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {

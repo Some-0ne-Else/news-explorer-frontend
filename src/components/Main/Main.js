@@ -30,18 +30,16 @@ function Main({
   const cardsPerStep = 3;
 
   React.useEffect(() => {
-    //console.log(localStorage.getItem('searchResult'));
     if (isLoggedIn) {
       if (localStorage.getItem('searchResult')) {
         setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
       }
       setShowSearchResults(true);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   React.useEffect(() => {
     setLastSearchRequest(localStorage.getItem('lastSearchRequest'));
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       api.getArticles(localStorage.getItem('jwt')).then((res) => {
         setSavedArticles(res);

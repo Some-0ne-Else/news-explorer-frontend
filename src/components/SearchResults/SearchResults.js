@@ -12,7 +12,6 @@ function SearchResults({
 }) {
   const [showLoadMore, setshowLoadMore] = React.useState(true);
   const cardsToRender = resultsArray.slice(0, currentIndex);
-  console.log(resultsArray);
   React.useEffect(() => {
     if (resultsArray.length <= currentIndex) {
       setshowLoadMore(false);

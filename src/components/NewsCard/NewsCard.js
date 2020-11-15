@@ -29,7 +29,6 @@ function NewsCard({
         article = savedArticles.data.find((article) => article.link === link);
       }
       if (article) {
-        console.log(article._id);
         setIsBookmarked(true);
         setSavedId(article._id);
       }
@@ -74,7 +73,6 @@ function NewsCard({
           image,
         )
         .then((res) => {
-          console.log(res);
           if (res.data) {
             setIsBookmarked(true);
             setSavedId(res.data._id);
@@ -82,16 +80,13 @@ function NewsCard({
         });
     } else {
       api.deleteArticle(localStorage.getItem('jwt'), savedId).then((res) => {
-        console.log(savedId);
         setIsBookmarked(false);
       });
     }
   }
 
   function handleDeleteButton() {
-    console.log(id);
     api.deleteArticle(localStorage.getItem('jwt'), id).then((res) => {
-      console.log(res);
       if (res.ok) {
         updateSavedCards();
       }

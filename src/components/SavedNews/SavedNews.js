@@ -27,8 +27,6 @@ function SavedNews({
         </span>
       )),
     );
-    console.log('here render');
-    console.log('statArr', statArray);
   }, [statArray]);
 
   React.useEffect(() => {
