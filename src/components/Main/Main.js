@@ -30,19 +30,28 @@ function Main({
   const cardsPerStep = 3;
 
   React.useEffect(() => {
-    DeactivateSavedNews();
-  });
+    //console.log(localStorage.getItem('searchResult'));
+    if (isLoggedIn) {
+      if (localStorage.getItem('searchResult')) {
+        setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
+      }
+      setShowSearchResults(true);
+    }
+  }, []);
 
   React.useEffect(() => {
-    if (localStorage.getItem('searchResult')) {
-      setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
-      setShowSearchResults(true);
-
+    setLastSearchRequest(localStorage.getItem('lastSearchRequest'));
+    console.log(isLoggedIn);
+    if (isLoggedIn) {
       api.getArticles(localStorage.getItem('jwt')).then((res) => {
         setSavedArticles(res);
       });
     }
-  }, []);
+  }, [isLoggedIn, setLastSearchRequest]);
+
+  React.useEffect(() => {
+    DeactivateSavedNews();
+  });
 
   function fixAbsentData(searchArray) {
     searchArray.forEach((item) => {
@@ -58,12 +67,10 @@ function Main({
     setIsLoading(true);
     setLastSearchRequest(searchStr);
     newsApi.search(searchStr).then((res) => {
-      console.log('res articles', res);
       if (res.articles.length > 0 && res.status === 'ok') {
         fixAbsentData(res.articles);
-        console.log('res articles afterFix', res);
         localStorage.setItem('searchResult', JSON.stringify(res.articles));
-        localStorage.setItem('lastSerchRequest', searchStr);
+        localStorage.setItem('lastSearchRequest', searchStr);
         setResultsArray(res.articles);
         setIsLoading(false);
         setShowSearchResults(true);

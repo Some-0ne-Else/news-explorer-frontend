@@ -10,10 +10,9 @@ function SearchResults({
   loadMoreHandler,
   isLoggedIn,
 }) {
-  console.log('SearchResults', isLoggedIn);
   const [showLoadMore, setshowLoadMore] = React.useState(true);
   const cardsToRender = resultsArray.slice(0, currentIndex);
-
+  console.log(resultsArray);
   React.useEffect(() => {
     if (resultsArray.length <= currentIndex) {
       setshowLoadMore(false);
