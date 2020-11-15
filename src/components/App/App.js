@@ -106,6 +106,7 @@ function App() {
     setCurrentUser('');
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchResult');
+    localStorage.removeItem('lastSearchRequest');
     history.push('/');
   }
 

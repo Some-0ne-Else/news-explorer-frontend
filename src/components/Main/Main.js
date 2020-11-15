@@ -33,8 +33,8 @@ function Main({
     if (isLoggedIn) {
       if (localStorage.getItem('searchResult')) {
         setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
+        setShowSearchResults(true);
       }
-      setShowSearchResults(true);
     }
   }, [isLoggedIn]);
 
