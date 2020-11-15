@@ -15,10 +15,21 @@ function SavedNews({
   handleLogout,
 }) {
   const [savedNewsArticles, setSavedNewsArticles] = React.useState([]);
-  const [statArray, setStatArray] = React.useState([
-    { keyword: 'test', counter: 3 },
-    { keyword: 'test', counter: 5 },
-  ]);
+  const [keyState, setKeyState] = React.useState('');
+  const [statArray, setStatArray] = React.useState([]);
+
+  React.useEffect(() => {
+    setKeyState(
+      statArray.map((item, index) => (
+        <span key={index} className="saved-news-header__keywords-span">
+          {' '}
+          {item.keyword}
+        </span>
+      )),
+    );
+    console.log('here render');
+    console.log('statArr', statArray);
+  }, [statArray]);
 
   React.useEffect(() => {
     api.getArticles(localStorage.getItem('jwt')).then((res) => {
@@ -30,6 +41,13 @@ function SavedNews({
   React.useEffect(() => {
     ActivateSavedNews();
   }, [ActivateSavedNews]);
+
+  function updateSavedCards() {
+    api.getArticles(localStorage.getItem('jwt')).then((res) => {
+      setSavedNewsArticles(res.data);
+      setStatArray(countWords(res.data));
+    });
+  }
 
   function countWords(arr) {
     let resultArr = [];
@@ -62,12 +80,19 @@ function SavedNews({
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
       />
-      <SavedNewsHeader resultArray={savedNewsArticles} statArray={statArray} />
+      <SavedNewsHeader
+        resultArray={savedNewsArticles}
+        statArray={statArray}
+        keyState={keyState}
+      />
       <NewsCardList
         cards={savedNewsArticles}
         setSavedNewsArticles={setSavedNewsArticles}
+        setStatArray={setStatArray}
+        statArray={statArray}
         savedArticles={savedNewsArticles}
         isLoggedIn={isLoggedIn}
+        updateSavedCards={updateSavedCards}
       />
       <Footer />
     </section>

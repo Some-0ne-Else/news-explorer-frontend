@@ -1,6 +1,5 @@
 import React from 'react';
 import api from '../../utils/MainApi';
-
 import './NewsCard.css';
 
 function NewsCard({
@@ -14,16 +13,17 @@ function NewsCard({
   image,
   isSearchCard,
   isLoggedIn,
-  handleArrayChange,
+  updateSavedCards,
   savedArticles,
   lastSearchRequest,
 }) {
-  console.log('NewsCard', isLoggedIn);
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [savedId, setSavedId] = React.useState('');
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isClicked, setIsClicked] = React.useState(false);
 
   React.useEffect(() => {
-    if (isSearchCard) {
+    if (isSearchCard && isLoggedIn) {
       let article;
       if (savedArticles.hasOwnProperty('data')) {
         article = savedArticles.data.find((article) => article.link === link);
@@ -34,6 +34,7 @@ function NewsCard({
         setSavedId(article._id);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedArticles, link, isSearchCard]);
 
   function changeDateFormat(dateString) {
@@ -92,12 +93,19 @@ function NewsCard({
     api.deleteArticle(localStorage.getItem('jwt'), id).then((res) => {
       console.log(res);
       if (res.ok) {
-        handleArrayChange(id);
+        updateSavedCards();
       }
     });
   }
 
-  if (isSearchCard) {
+  function handleHover() {
+    setIsHovered(!isHovered);
+  }
+
+  function handlePreDelete() {
+    setIsClicked(!isClicked);
+  }
+  if (isSearchCard && isLoggedIn) {
     return (
       <div className="news-card">
         <div className="news-card__image-wrapper">
@@ -110,7 +118,47 @@ function NewsCard({
                 : 'news-card__bookmark-button'
             }
           ></button>
-          <img className="news-card__image" src={image} alt={title} />
+          <a className="news-card__link" href={link} target="__blank">
+            <img className="news-card__image" src={image} alt={title} />
+          </a>
+        </div>
+        <div className="news-card__description-wrapper">
+          <p className="news-card__date">{changeDateFormat(date)}</p>
+          <p className="news-card__title">{title}</p>
+          <p className="news-card__text">{text}</p>
+          <p className="news-card__source">{source}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isSearchCard) {
+    return (
+      <div className="news-card">
+        <div className="news-card__image-wrapper">
+          <button
+            className={
+              isHovered
+                ? 'news-card__register-button news-card__register-button_active'
+                : 'news-card__register-button'
+            }
+          >
+            Войдите, чтобы сохранять статьи
+          </button>
+          <button
+            type="button"
+            onMouseEnter={handleHover}
+            onMouseLeave={handleHover}
+            onClick={handleBookmarkButton}
+            className={
+              isBookmarked
+                ? 'news-card__bookmark-button news-card__bookmark-button_marked'
+                : 'news-card__bookmark-button'
+            }
+          ></button>
+          <a className="news-card__link" href={link} target="__blank">
+            <img className="news-card__image" src={image} alt={title} />
+          </a>
         </div>
         <div className="news-card__description-wrapper">
           <p className="news-card__date">{changeDateFormat(date)}</p>
@@ -128,9 +176,22 @@ function NewsCard({
         <button
           type="button"
           onClick={handleDeleteButton}
+          className={
+            isClicked
+              ? 'news-card__hover-button news-card__hover-button_active'
+              : 'news-card__hover-button'
+          }
+        >
+          Убрать из сохранённых
+        </button>
+        <button
+          type="button"
+          onClick={handlePreDelete}
           className="news-card__delete-button"
         ></button>
-        <img className="news-card__image" src={image} alt={title} />
+        <a className="news-card__link" href={link} target="__blank">
+          <img className="news-card__image" src={image} alt={title} />
+        </a>
       </div>
       <div className="news-card__description-wrapper">
         <p className="news-card__date">{changeDateFormat(date)}</p>

@@ -5,16 +5,12 @@ import NewsCard from '../NewsCard/NewsCard';
 function NewsCardList({
   cards,
   savedArticles,
-  setSavedNewsArticles,
   lastSearchRequest,
   isSearchCard,
   isLoggedIn,
+  statArray,
+  updateSavedCards,
 }) {
-  function handleArrayChange(id) {
-    console.log('id to del', id);
-    setSavedNewsArticles(cards.filter((c) => c._id !== id));
-  }
-
   if (isSearchCard) {
     return (
       <section className="news-card-list">
@@ -47,11 +43,12 @@ function NewsCardList({
           text={card.text}
           date={card.date}
           image={card.image}
+          link={card.link}
           source={card.source}
           key={card._id}
           id={card._id}
           isSearchCard={isSearchCard}
-          handleArrayChange={handleArrayChange}
+          updateSavedCards={updateSavedCards}
         />
       ))}
     </section>

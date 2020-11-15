@@ -2,8 +2,23 @@ import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUser';
 import './SavedNewsHeader.css';
 
-function SavedNewsHeader({ resultArray, statArray }) {
+function SavedNewsHeader({ resultArray, statArray, keyState }) {
   const currentUser = React.useContext(CurrentUserContext);
+
+  if (statArray.length <= 3) {
+    return (
+      <section className="saved-news-header">
+        <h2 className="saved-news-header__title">Сохранённые статьи</h2>
+        <p className="saved-news-header__greeting">
+          {currentUser}, у вас {resultArray.length} сохранённых статей
+        </p>
+        <p className="saved-news-header__keywords">
+          По ключевым словам:&nbsp;
+          {keyState}
+        </p>
+      </section>
+    );
+  }
   return (
     <section className="saved-news-header">
       <h2 className="saved-news-header__title">Сохранённые статьи</h2>
@@ -17,7 +32,7 @@ function SavedNewsHeader({ resultArray, statArray }) {
         </span>
         &nbsp;и&nbsp;
         <span className="saved-news-header__keywords-span">
-          {resultArray.length - 2}-м другим
+          {statArray.length - 2}-м другим
         </span>
       </p>
     </section>

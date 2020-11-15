@@ -9,6 +9,7 @@ import Preloader from '../Preloader/Preloader';
 import NoResults from '../NoResults/NoResults';
 import newsApi from '../../utils/NewsApi';
 import api from '../../utils/MainApi';
+import noImage from '../../images/no-image.png';
 
 function Main({
   DeactivateSavedNews,
@@ -36,12 +37,20 @@ function Main({
     if (localStorage.getItem('searchResult')) {
       setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
       setShowSearchResults(true);
+
       api.getArticles(localStorage.getItem('jwt')).then((res) => {
-        console.log('SavedArticles', res);
         setSavedArticles(res);
       });
     }
   }, []);
+
+  function fixAbsentData(searchArray) {
+    searchArray.forEach((item) => {
+      if (item.urlToImage === null) {
+        item.urlToImage = noImage;
+      }
+    });
+  }
 
   function handleSearch(searchStr) {
     setShowSearchResults(false);
@@ -51,7 +60,10 @@ function Main({
     newsApi.search(searchStr).then((res) => {
       console.log('res articles', res);
       if (res.articles.length > 0 && res.status === 'ok') {
+        fixAbsentData(res.articles);
+        console.log('res articles afterFix', res);
         localStorage.setItem('searchResult', JSON.stringify(res.articles));
+        localStorage.setItem('lastSerchRequest', searchStr);
         setResultsArray(res.articles);
         setIsLoading(false);
         setShowSearchResults(true);

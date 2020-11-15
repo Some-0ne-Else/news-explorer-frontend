@@ -16,16 +16,19 @@
   height: 272px;
   object-fit: fill;
 }
+
 @media screen and (max-width: 768px) {
   .news-card__image {
     height: 150px;
   }
 }
+
 @media screen and (max-width: 510px) {
   .news-card__image {
     height: 196px;
   }
 }
+
 .news-card__keyword {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
@@ -127,12 +130,76 @@
 .news-card__bookmark-button:hover {
   cursor: url('../../images/cursor.svg'), auto;
   background-image: url('../../images/news-card_bookmark_active.svg');
+  display: block;
 }
 
 .news-card__bookmark-button_marked {
   background-image: url('../../images/news-card_bookmark_marked.svg');
 }
 
+.news-card__register-button {
+  background: #ffffff;
+  box-shadow: 0px 10px 22px rgba(59, 74, 116, 0.1);
+  border-radius: 10px;
+  width: 182px;
+  height: 40px;
+  border: none;
+  outline: none;
+  position: absolute;
+  top: 24px;
+  right: 69px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  opacity: 0;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: url('../../images/cursor.svg'), auto;
+}
+
+.news-card__register-button_active {
+  opacity: 1;
+}
+
+.news-card__hover-button {
+  background: #ffffff;
+  box-shadow: 0px 10px 22px rgba(59, 74, 116, 0.1);
+  border-radius: 10px;
+  width: 159px;
+  height: 40px;
+  border: none;
+  outline: none;
+  position: absolute;
+  top: 24px;
+  right: 69px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  opacity: 0;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: url('../../images/cursor.svg'), auto;
+}
+
+.news-card__hover-button_active {
+  opacity: 1;
+}
 .news-card__description-wrapper {
   display: flex;
   flex-direction: column;
