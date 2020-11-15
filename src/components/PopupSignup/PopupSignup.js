@@ -10,32 +10,33 @@ function PopupSignup({
   onClose,
   handleSignUp,
 }) {
-  const SignupFormValidation = useFormWithValidation();
+  const signupFormValidation = useFormWithValidation();
   const [actionError, setActionError] = React.useState('');
-
-  const emailRef = React.useRef('');
-  const passwordRef = React.useRef('');
-  const nameRef = React.useRef('');
-
-  function handleEmailChange(e) {
-    emailRef.current = e.target.value;
-  }
-
-  function handlePasswordChange(e) {
-    passwordRef.current = e.target.value;
-  }
-
-  function handleNameChange(e) {
-    nameRef.current = e.target.value;
-  }
 
   function submitHandler(e) {
     e.preventDefault();
     api
-      .signUp(emailRef.current, passwordRef.current, nameRef.current)
+      .signUp(
+        signupFormValidation.values.email,
+        signupFormValidation.values.password,
+        signupFormValidation.values.name,
+      )
       .then((res) => {
-        res.email ? handleSignUp() : console.log(res);
+        if (res.email) {
+          handleSignUp();
+          e.target.closest('form').reset();
+          signupFormValidation.resetForm(e);
+        } else {
+          setActionError(res.message);
+        }
       });
+  }
+
+  function closePopup(e) {
+    e.target.closest('form').reset();
+    signupFormValidation.resetForm(e);
+    setActionError('');
+    onClose();
   }
   return (
     <PopupWithForm
@@ -45,42 +46,50 @@ function PopupSignup({
       isOpen={isSignUpPopupOpen}
       buttonName="Войти"
       buttonHandler={loginButtonHandler}
-      onClose={onClose}
+      onClose={closePopup}
       onSubmit={submitHandler}
+      isValid={signupFormValidation.isValid}
     >
       <p className="popup__caption">Email</p>
       <input
         type="email"
         className="popup__input"
-        name="email-signup"
-        id="email-signup"
+        name="email"
         placeholder="Введите почту"
         required
-        onChange={handleEmailChange}
+        onChange={signupFormValidation.handleChange}
       />
       <p className="popup__input-error" name="email-error">
-        {loginFormValidation.errors.email}
+        {signupFormValidation.errors.email}
       </p>
       <p className="popup__caption">Пароль</p>
       <input
         type="password"
         className="popup__input"
-        name="password-signup"
-        id="password-signup"
+        name="password"
         placeholder="Введите пароль"
         required
-        onChange={handlePasswordChange}
+        onChange={signupFormValidation.handleChange}
       />
+      <p className="popup__input-error" name="password-error">
+        {signupFormValidation.errors.password}{' '}
+      </p>
       <p className="popup__caption">Имя</p>
       <input
         type="text"
         className="popup__input"
         name="name"
-        id="name"
         placeholder="Введите своё имя"
+        minLength="2"
         required
-        onChange={handleNameChange}
+        onChange={signupFormValidation.handleChange}
       />
+      <p className="popup__input-error" name="name-error">
+        {signupFormValidation.errors.name}{' '}
+      </p>
+      <p className="popup__action-error" name="action-error">
+        {actionError}
+      </p>
     </PopupWithForm>
   );
 }

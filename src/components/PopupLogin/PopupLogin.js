@@ -37,8 +37,8 @@ function PopupLogin({
   function closePopup(e) {
     e.target.closest('form').reset();
     loginFormValidation.resetForm(e);
-    onClose();
     setActionError('');
+    onClose();
   }
 
   return (

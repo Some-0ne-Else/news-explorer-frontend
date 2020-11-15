@@ -105,6 +105,7 @@ function NewsCard({
   function handlePreDelete() {
     setIsClicked(!isClicked);
   }
+
   if (isSearchCard && isLoggedIn) {
     return (
       <div className="news-card">
@@ -149,7 +150,6 @@ function NewsCard({
             type="button"
             onMouseEnter={handleHover}
             onMouseLeave={handleHover}
-            onClick={handleBookmarkButton}
             className={
               isBookmarked
                 ? 'news-card__bookmark-button news-card__bookmark-button_marked'
