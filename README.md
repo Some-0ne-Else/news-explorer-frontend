@@ -1,5 +1,5 @@
-# Project version also available on [https://some0neelse.tk/](https://some0neelse.tk/)
-Actual version is here, a few bugs was fixed.
+# Actual version is here, a few bugs was fixed. [https://some0neelse.tk/](https://some0neelse.tk/)
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
