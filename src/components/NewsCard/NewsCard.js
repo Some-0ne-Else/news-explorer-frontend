@@ -7,7 +7,7 @@ function NewsCard({ keyword, title, text, date, source, image, isSearchCard }) {
       <div className="news-card">
         <div className="news-card__image-wrapper">
           <button className="news-card__bookmark-button"></button>
-          <img className="news-card__image" src={image} alt="" />
+          <img className="news-card__image" src={image} alt={title} />
         </div>
         <div className="news-card__description-wrapper">
           <p className="news-card__date">{date}</p>
@@ -23,7 +23,7 @@ function NewsCard({ keyword, title, text, date, source, image, isSearchCard }) {
       <div className="news-card__image-wrapper">
         <p className="news-card__keyword">{keyword}</p>
         <button className="news-card__delete-button"></button>
-        <img className="news-card__image" src={image} alt="" />
+        <img className="news-card__image" src={image} alt={title} />
       </div>
       <div className="news-card__description-wrapper">
         <p className="news-card__date">{date}</p>

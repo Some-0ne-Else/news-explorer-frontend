@@ -30,7 +30,7 @@
 }
 
 .navigation__menu-link {
-  font-family: Roboto;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -71,7 +71,7 @@
 }
 
 .navigation__menu-button {
-  font-family: Roboto;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

@@ -12,6 +12,7 @@ function NewsCardList({ cards, isSearchCard }) {
           text={card.text}
           date={card.date}
           image={card.image}
+          source={card.source}
           key={card._id}
           isSearchCard={isSearchCard}
         />
