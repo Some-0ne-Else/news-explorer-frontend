@@ -8,8 +8,8 @@ function NewsCardList({
   lastSearchRequest,
   isSearchCard,
   isLoggedIn,
-  statArray,
   updateSavedCards,
+  loginButtonHandler,
 }) {
   if (isSearchCard) {
     return (
@@ -28,6 +28,7 @@ function NewsCardList({
             savedArticles={savedArticles}
             lastSearchRequest={lastSearchRequest}
             isSearchCard={isSearchCard}
+            loginButtonHandler={loginButtonHandler}
           />
         ))}
       </section>

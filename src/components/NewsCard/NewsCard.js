@@ -16,6 +16,7 @@ function NewsCard({
   updateSavedCards,
   savedArticles,
   lastSearchRequest,
+  loginButtonHandler,
 }) {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [savedId, setSavedId] = React.useState('');
@@ -77,20 +78,27 @@ function NewsCard({
             setIsBookmarked(true);
             setSavedId(res.data._id);
           }
-        });
+        })
+        .catch((err) => console.log(err));
     } else {
-      api.deleteArticle(localStorage.getItem('jwt'), savedId).then((res) => {
-        setIsBookmarked(false);
-      });
+      api
+        .deleteArticle(localStorage.getItem('jwt'), savedId)
+        .then((res) => {
+          setIsBookmarked(false);
+        })
+        .catch((err) => console.log(err));
     }
   }
 
   function handleDeleteButton() {
-    api.deleteArticle(localStorage.getItem('jwt'), id).then((res) => {
-      if (res.ok) {
-        updateSavedCards();
-      }
-    });
+    api
+      .deleteArticle(localStorage.getItem('jwt'), id)
+      .then((res) => {
+        if (res.ok) {
+          updateSavedCards();
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleHover() {
@@ -145,6 +153,7 @@ function NewsCard({
             type="button"
             onMouseEnter={handleHover}
             onMouseLeave={handleHover}
+            onClick={loginButtonHandler}
             className={
               isBookmarked
                 ? 'news-card__bookmark-button news-card__bookmark-button_marked'

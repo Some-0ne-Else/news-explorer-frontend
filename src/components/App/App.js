@@ -42,7 +42,7 @@ function App() {
     mobileMenu.addEventListener('click', closePopupAtOverlayClick);
   }
   const handleEscPress = useCallback((evt) => {
-    if (evt.code === 'Escape') {
+    if (evt.key === 'Escape') {
       closeAnyPopup();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

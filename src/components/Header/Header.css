@@ -58,6 +58,7 @@
 
 .header__link:hover {
   cursor: url('../../images/cursor.svg'), auto;
+  opacity: 0.6;
 }
 
 .header__link_theme_white {

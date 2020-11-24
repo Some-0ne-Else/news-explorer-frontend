@@ -10,6 +10,7 @@ import NoResults from '../NoResults/NoResults';
 import newsApi from '../../utils/NewsApi';
 import api from '../../utils/MainApi';
 import noImage from '../../images/no-image.png';
+import { cardsPerStep } from '../../utils/Constants';
 
 function Main({
   DeactivateSavedNews,
@@ -27,7 +28,6 @@ function Main({
   const [currentIndex, setCurrentIndex] = React.useState(3);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isNoResults, setIsNoResults] = React.useState(false);
-  const cardsPerStep = 3;
 
   React.useEffect(() => {
     if (isLoggedIn) {
@@ -64,19 +64,20 @@ function Main({
     setIsNoResults(false);
     setIsLoading(true);
     setLastSearchRequest(searchStr);
-    newsApi.search(searchStr).then((res) => {
-      if (res.articles.length > 0 && res.status === 'ok') {
-        fixAbsentData(res.articles);
-        localStorage.setItem('searchResult', JSON.stringify(res.articles));
-        localStorage.setItem('lastSearchRequest', searchStr);
-        setResultsArray(res.articles);
-        setIsLoading(false);
-        setShowSearchResults(true);
-      } else {
-        setIsLoading(false);
-        setIsNoResults(true);
-      }
-    });
+    newsApi
+      .search(searchStr)
+      .then((res) => {
+        if (res.articles.length > 0 && res.status === 'ok') {
+          fixAbsentData(res.articles);
+          localStorage.setItem('searchResult', JSON.stringify(res.articles));
+          localStorage.setItem('lastSearchRequest', searchStr);
+          setResultsArray(res.articles);
+          setShowSearchResults(true);
+        } else {
+          setIsNoResults(true);
+        }
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function loadMore() {
@@ -112,6 +113,7 @@ function Main({
           lastSearchRequest={lastSearchRequest}
           currentIndex={currentIndex}
           loadMoreHandler={loadMore}
+          loginButtonHandler={loginButtonHandler}
         />
       ) : null}
       <About />

@@ -9,13 +9,14 @@ function SearchResults({
   currentIndex,
   loadMoreHandler,
   isLoggedIn,
+  loginButtonHandler,
 }) {
   const [showLoadMore, setshowLoadMore] = React.useState(true);
   const cardsToRender = resultsArray.slice(0, currentIndex);
   React.useEffect(() => {
-    if (resultsArray.length <= currentIndex) {
-      setshowLoadMore(false);
-    } else setshowLoadMore(true);
+    resultsArray.length <= currentIndex
+      ? setshowLoadMore(false)
+      : setshowLoadMore(true);
   }, [currentIndex, resultsArray.length]);
 
   return (
@@ -27,6 +28,7 @@ function SearchResults({
         lastSearchRequest={lastSearchRequest}
         isSearchCard={true}
         isLoggedIn={isLoggedIn}
+        loginButtonHandler={loginButtonHandler}
       />
       {showLoadMore ? (
         <button

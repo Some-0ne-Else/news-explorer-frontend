@@ -8,4 +8,5 @@ const sevenDaysBefore = 7 * 24 * 60 * 60 * 1000; // 7d * 24h * 60m * 60s *1000ms
 const today = new Date(Date.now() + utcRuOffset);
 const weekAgo = new Date(Date.now() - sevenDaysBefore + utcRuOffset);
 const token = '';
-export { baseUrl, baseNewsUrl, apiKey, today, weekAgo, token };
+const cardsPerStep = 3;
+export { baseUrl, baseNewsUrl, apiKey, today, weekAgo, token, cardsPerStep };

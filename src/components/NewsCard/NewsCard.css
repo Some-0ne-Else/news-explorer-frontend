@@ -130,7 +130,12 @@
 .news-card__bookmark-button:hover {
   cursor: url('../../images/cursor.svg'), auto;
   background-image: url('../../images/news-card_bookmark_active.svg');
-  display: block;
+}
+/* better usabiluty on mobile devices */
+@media screen and (max-width: 400px) {
+  .news-card__bookmark-button:hover {
+    background-image: url('../../images/news-card_bookmark.svg');
+  }
 }
 
 .news-card__bookmark-button_marked {
@@ -200,6 +205,7 @@
 .news-card__hover-button_active {
   opacity: 1;
 }
+
 .news-card__description-wrapper {
   display: flex;
   flex-direction: column;

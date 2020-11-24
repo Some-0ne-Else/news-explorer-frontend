@@ -21,17 +21,23 @@ function PopupLogin({
         loginFormValidation.values.password,
       )
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          api.checkToken(res.token).then((res) => {
-            onLogin(res.data.name);
-            loginFormValidation.resetForm();
-            e.target.closest('form').reset();
-          });
+        if (res) {
+          if (res.token) {
+            localStorage.setItem('jwt', res.token);
+            api
+              .checkToken(res.token)
+              .then((res) => {
+                onLogin(res.data.name);
+                loginFormValidation.resetForm();
+                e.target.closest('form').reset();
+              })
+              .catch((err) => console.log(err));
+          } else setActionError(res.message);
         } else {
-          setActionError(res.message);
+          setActionError('Произошла ошибка. Попробуйте еще раз.');
         }
-      });
+      })
+      .catch((err) => console.log(err));
   }
 
   function closePopup(e) {
