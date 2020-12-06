@@ -2,7 +2,11 @@
   background: rgba(196, 196, 196, 0.01);
   box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
 }
-
+@media screen and (max-width: 320px) {
+  .header {
+    height: 56px;
+  }
+}
 .header_theme_white {
   background: #ffffff;
   box-shadow: inset 0px -1px 0px #d1d2d6;
@@ -28,8 +32,12 @@
   }
 }
 
+.header__title {
+  margin: 0;
+}
+
 .header__link {
-  font-family: Roboto Slab;
+  font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
@@ -50,6 +58,7 @@
 
 .header__link:hover {
   cursor: url('../../images/cursor.svg'), auto;
+  opacity: 0.6;
 }
 
 .header__link_theme_white {

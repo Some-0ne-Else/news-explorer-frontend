@@ -1,14 +1,18 @@
 import React, { useCallback } from 'react';
 import './App.css';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import PopupLogin from '../PopupLogin/PopupLogin';
 import PopupSignup from '../PopupSignup/PopupSignup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import MobileMenu from '../MobileMenu/MobileMenu';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import api from '../../utils/MainApi';
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState('');
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setIsSignUpPopupOpen] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
@@ -16,7 +20,8 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
-  const [userName, setuserName] = React.useState('');
+  const [lastSearchRequest, setLastSearchRequest] = React.useState('');
+
   const history = useHistory();
 
   React.useEffect(() => {
@@ -37,16 +42,16 @@ function App() {
     mobileMenu.addEventListener('click', closePopupAtOverlayClick);
   }
   const handleEscPress = useCallback((evt) => {
-    if (evt.code === 'Escape') {
+    if (evt.key === 'Escape') {
       closeAnyPopup();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    document.addEventListener('keydown', handleEscPress, false);
+    document.addEventListener('keyup', handleEscPress, false);
     return () => {
-      document.removeEventListener('keydown', handleEscPress, false);
+      document.removeEventListener('keyup', handleEscPress, false);
     };
   }, [handleEscPress]);
 
@@ -56,37 +61,52 @@ function App() {
     }
   }
 
+  React.useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      api.checkToken(localStorage.getItem('jwt')).then((res) => {
+        handleLogin(res.data.name);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function loginButtonHandler() {
     closeAnyPopup();
     setIsLoginPopupOpen(true);
     const popupWithLogin = document.querySelector('.popup_login');
-    popupWithLogin.addEventListener('click', closePopupAtOverlayClick);
+    popupWithLogin.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
   function registerButtonHandler() {
     closeAnyPopup();
     setIsSignUpPopupOpen(true);
     const popupWithSignup = document.querySelector('.popup_sign-up');
-    popupWithSignup.addEventListener('click', closePopupAtOverlayClick);
+    popupWithSignup.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
   function openInfoTooltip() {
     setIsInfoTooltipOpen(true);
     const infoTooltipPopup = document.querySelector('.info-tooltip');
-    infoTooltipPopup.addEventListener('click', closePopupAtOverlayClick);
+    infoTooltipPopup.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
-  function handleLogin() {
+  function handleLogin(name) {
     setIsLoggedin(true);
-    setuserName('Грета');
+    setCurrentUser(name);
     closeAnyPopup();
   }
+
   function handleSignUp() {
     setIsSignUpPopupOpen(false);
     openInfoTooltip();
   }
+
   function handleLogout() {
     setIsLoggedin(false);
+    setCurrentUser('');
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('searchResult');
+    localStorage.removeItem('lastSearchRequest');
     history.push('/');
   }
 
@@ -97,7 +117,7 @@ function App() {
     setIsMobileMenuOpen(false);
     removeEventListeners();
   }
-  /*indian code style = on */
+
   function ActivateSavedNews() {
     setIsSavedNews(true);
   }
@@ -115,58 +135,59 @@ function App() {
     mobileMenu.removeEventListener('click', closePopupAtOverlayClick);
   }
   return (
-    <div className="app">
-      <Switch>
-        <Route exact path="/">
-          <Main
-            DeactivateSavedNews={DeactivateSavedNews}
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="app">
+        <Switch>
+          <Route exact path="/">
+            <Main
+              DeactivateSavedNews={DeactivateSavedNews}
+              isLoggedIn={isLoggedIn}
+              isMobileMenu={isMobileMenu}
+              handleMobileMenuClick={handleMobileMenuClick}
+              loginButtonHandler={loginButtonHandler}
+              handleLogout={handleLogout}
+              lastSearchRequest={lastSearchRequest}
+              setLastSearchRequest={setLastSearchRequest}
+            />
+          </Route>
+          <ProtectedRoute
             isLoggedIn={isLoggedIn}
-            userName={userName}
-            isMobileMenu={isMobileMenu}
-            handleMobileMenuClick={handleMobileMenuClick}
-            loginButtonHandler={loginButtonHandler}
-            handleLogout={handleLogout}
-          />
-        </Route>
-        <Route path="/saved-news">
-          <SavedNews
+            path="/saved-news"
             isSavedNews={isSavedNews}
             ActivateSavedNews={ActivateSavedNews}
-            isLoggedIn={isLoggedIn}
-            userName={userName}
             isMobileMenu={isMobileMenu}
             handleMobileMenuClick={handleMobileMenuClick}
             handleLogout={handleLogout}
+            component={SavedNews}
           />
-        </Route>
-      </Switch>
-      <PopupLogin
-        isLoginPopupOpen={isLoginPopupOpen}
-        registerButtonHandler={registerButtonHandler}
-        onClose={closeAnyPopup}
-        onSubmit={handleLogin}
-      />
-      <PopupSignup
-        isSignUpPopupOpen={isSignUpPopupOpen}
-        loginButtonHandler={loginButtonHandler}
-        onClose={closeAnyPopup}
-        onSubmit={handleSignUp}
-      />
-      <InfoTooltip
-        isOpen={isInfoTooltipOpen}
-        onClose={closeAnyPopup}
-        onLogin={loginButtonHandler}
-      />
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        isLoggedIn={isLoggedIn}
-        userName={userName}
-        handleLogout={handleLogout}
-        onClose={closeAnyPopup}
-        isSavedNews={isSavedNews}
-        loginButtonHandler={loginButtonHandler}
-      />
-    </div>
+        </Switch>
+        <PopupLogin
+          isLoginPopupOpen={isLoginPopupOpen}
+          registerButtonHandler={registerButtonHandler}
+          onClose={closeAnyPopup}
+          onLogin={handleLogin}
+        />
+        <PopupSignup
+          isSignUpPopupOpen={isSignUpPopupOpen}
+          loginButtonHandler={loginButtonHandler}
+          onClose={closeAnyPopup}
+          handleSignUp={handleSignUp}
+        />
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAnyPopup}
+          onLogin={loginButtonHandler}
+        />
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          isLoggedIn={isLoggedIn}
+          handleLogout={handleLogout}
+          onClose={closeAnyPopup}
+          isSavedNews={isSavedNews}
+          loginButtonHandler={loginButtonHandler}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

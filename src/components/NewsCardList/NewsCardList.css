@@ -8,18 +8,29 @@
   transition: ease 0.5s;
 }
 
+@media screen and (max-width: 1280px) {
+  .news-card-list {
+    padding: 62px 40px 62px 40px;
+  }
+}
 @media screen and (max-width: 900px) {
   .news-card-list {
     padding: 32px 40px 22px 40px;
     gap: 8px;
+    grid-template-rows: 480px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .news-card-list {
     grid-template-rows: 420px;
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   .news-card-list {
     grid-template-columns: 1fr 1fr;
     padding: 32px 22px;
+    grid-template-rows: 480px;
   }
 }
 

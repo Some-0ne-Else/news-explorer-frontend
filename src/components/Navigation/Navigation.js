@@ -3,16 +3,18 @@ import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function Navigation({
   isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
-  userName,
   isSavedNews,
   handleLogout,
   loginButtonHandler,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
+
   let navigationMenuLink = 'navigation__menu-link';
   let navigationMenuLinkActive = 'navigation__menu-link_active';
   let navigationMenuItem = 'navigation__menu-item';
@@ -69,7 +71,7 @@ function Navigation({
           </li>
           <li className={navigationMenuItem}>
             <button className={navigationMenuButton} onClick={handleLogout}>
-              {userName}
+              {currentUser}
               <img alt="Иконка выхода" src={exitImg} />
             </button>
           </li>

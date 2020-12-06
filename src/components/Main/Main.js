@@ -4,30 +4,91 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
-/*FOR DEMO REASONS */
-//import SearchResults from '../SearchResults/SearchResults';
-// import Preloader from '../Preloader/Preloader';
-// import NoResults from '../NoResults/NoResults';
+import SearchResults from '../SearchResults/SearchResults';
+import Preloader from '../Preloader/Preloader';
+import NoResults from '../NoResults/NoResults';
+import newsApi from '../../utils/NewsApi';
+import api from '../../utils/MainApi';
+import noImage from '../../images/no-image.png';
+import { cardsPerStep } from '../../utils/Constants';
 
 function Main({
   DeactivateSavedNews,
   isLoggedIn,
-  userName,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
+  lastSearchRequest,
+  setLastSearchRequest,
 }) {
+  const [showSearchResults, setShowSearchResults] = React.useState(false);
+  const [resultsArray, setResultsArray] = React.useState([]);
+  const [savedArticles, setSavedArticles] = React.useState([]);
+  const [currentIndex, setCurrentIndex] = React.useState(3);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isNoResults, setIsNoResults] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      if (localStorage.getItem('searchResult')) {
+        setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
+        setShowSearchResults(true);
+      }
+    }
+  }, [isLoggedIn]);
+
+  React.useEffect(() => {
+    setLastSearchRequest(localStorage.getItem('lastSearchRequest'));
+    if (isLoggedIn) {
+      api.getArticles(localStorage.getItem('jwt')).then((res) => {
+        setSavedArticles(res);
+      });
+    }
+  }, [isLoggedIn, setLastSearchRequest]);
+
   React.useEffect(() => {
     DeactivateSavedNews();
   });
+
+  function fixAbsentData(searchArray) {
+    searchArray.forEach((item) => {
+      if (item.urlToImage === null) {
+        item.urlToImage = noImage;
+      }
+    });
+  }
+
+  function handleSearch(searchStr) {
+    setShowSearchResults(false);
+    setIsNoResults(false);
+    setIsLoading(true);
+    setLastSearchRequest(searchStr);
+    newsApi
+      .search(searchStr)
+      .then((res) => {
+        if (res.articles.length > 0 && res.status === 'ok') {
+          fixAbsentData(res.articles);
+          localStorage.setItem('searchResult', JSON.stringify(res.articles));
+          localStorage.setItem('lastSearchRequest', searchStr);
+          setResultsArray(res.articles);
+          setShowSearchResults(true);
+        } else {
+          setIsNoResults(true);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }
+
+  function loadMore() {
+    setCurrentIndex(currentIndex + cardsPerStep);
+  }
 
   return (
     <section className="main">
       <Header
         DeactivateSavedNews={DeactivateSavedNews}
         isLoggedIn={isLoggedIn}
-        userName={userName}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
@@ -40,12 +101,21 @@ function Main({
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        <SearchForm />
+        <SearchForm handleSearch={handleSearch} />
       </div>
-      {/* <Preloader/> */}
-      {/* <NoResults/> */}
-      {/* <SearchResults />*/}
-
+      {isLoading ? <Preloader /> : null}
+      {isNoResults ? <NoResults /> : null}
+      {showSearchResults ? (
+        <SearchResults
+          isLoggedIn={isLoggedIn}
+          resultsArray={resultsArray}
+          savedArticles={savedArticles}
+          lastSearchRequest={lastSearchRequest}
+          currentIndex={currentIndex}
+          loadMoreHandler={loadMore}
+          loginButtonHandler={loginButtonHandler}
+        />
+      ) : null}
       <About />
       <Footer />
     </section>

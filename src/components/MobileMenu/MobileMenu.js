@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import './MobileMenu.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function MobileMenu({
   isOpen,
   isSavedNews,
   isLoggedIn,
-  userName,
   handleLogout,
   loginButtonHandler,
   onClose,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
+
   let mobileMenuContainer = 'mobile-menu__container';
   let mobileMenuTitle = 'mobile-menu__title';
   let mobileMenuCloseButton = 'mobile-menu__close-button';
@@ -65,7 +67,7 @@ function MobileMenu({
               className={mobileMenuMenuButton}
               onClick={handleLogout}
             >
-              {userName}
+              {currentUser}
               <img alt="Иконка выхода" src={exitImg} />
             </button>
           </nav>
