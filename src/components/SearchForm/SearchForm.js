@@ -1,7 +1,7 @@
 import React from 'react';
 import './SearchForm.css';
 
-function SearchForm({ handleSearch }) {
+function SearchForm({ handleSearch, isSearchButtonBlocked }) {
   const searchStringRef = React.useRef('');
 
   function handleChange(e) {
@@ -19,9 +19,16 @@ function SearchForm({ handleSearch }) {
         required
         onChange={handleChange}
       ></input>
-      <button className="search__button" type="submit">
-        Искать
-      </button>
+
+      {isSearchButtonBlocked ? (
+        <button className="search__button" type="submit" disabled>
+          Идет поиск
+        </button>
+      ) : (
+        <button className="search__button" type="submit">
+          Искать
+        </button>
+      )}
     </form>
   );
 }

@@ -28,6 +28,9 @@ function Main({
   const [currentIndex, setCurrentIndex] = React.useState(3);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isNoResults, setIsNoResults] = React.useState(false);
+  const [isSearchButtonBlocked, setisSearchButtonBlocked] = React.useState(
+    false,
+  );
 
   React.useEffect(() => {
     if (isLoggedIn) {
@@ -59,25 +62,31 @@ function Main({
     });
   }
 
-  function handleSearch(searchStr) {
+  function handleSearch(searchRequest) {
+    setisSearchButtonBlocked(true);
     setShowSearchResults(false);
     setIsNoResults(false);
     setIsLoading(true);
-    setLastSearchRequest(searchStr);
+    setLastSearchRequest(searchRequest);
     newsApi
-      .search(searchStr)
+      .search(searchRequest)
       .then((res) => {
-        if (res.articles.length > 0 && res.status === 'ok') {
-          fixAbsentData(res.articles);
-          localStorage.setItem('searchResult', JSON.stringify(res.articles));
-          localStorage.setItem('lastSearchRequest', searchStr);
-          setResultsArray(res.articles);
-          setShowSearchResults(true);
-        } else {
-          setIsNoResults(true);
-        }
+        if (res) {
+          if (res.articles.length > 0 && res.status === 'ok') {
+            fixAbsentData(res.articles);
+            localStorage.setItem('searchResult', JSON.stringify(res.articles));
+            localStorage.setItem('lastSearchRequest', searchRequest);
+            setResultsArray(res.articles);
+            setShowSearchResults(true);
+          } else {
+            setIsNoResults(true);
+          }
+        } else console.log('Ошибка при получении данных');
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        setisSearchButtonBlocked(false);
+      });
   }
 
   function loadMore() {
@@ -101,7 +110,10 @@ function Main({
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        <SearchForm handleSearch={handleSearch} />
+        <SearchForm
+          handleSearch={handleSearch}
+          isSearchButtonBlocked={isSearchButtonBlocked}
+        />
       </div>
       {isLoading ? <Preloader /> : null}
       {isNoResults ? <NoResults /> : null}
