@@ -6,12 +6,7 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
 import api from '../../utils/MainApi';
 
-function SavedNews({
-  isLoggedIn,
-  isMobileMenu,
-  handleMobileMenuClick,
-  handleLogout,
-}) {
+function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
   const [savedNewsArticles, setSavedNewsArticles] = React.useState([]);
   const [keyState, setKeyState] = React.useState('');
   const [statArray, setStatArray] = React.useState([]);
@@ -69,7 +64,6 @@ function SavedNews({
   return (
     <section className="saved-news">
       <Header
-        isLoggedIn={isLoggedIn}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
@@ -85,7 +79,6 @@ function SavedNews({
         setStatArray={setStatArray}
         statArray={statArray}
         savedArticles={savedNewsArticles}
-        isLoggedIn={isLoggedIn}
         updateSavedCards={updateSavedCards}
       />
       <Footer />

@@ -8,7 +8,6 @@ function SearchResults({
   lastSearchRequest,
   currentIndex,
   loadMoreHandler,
-  isLoggedIn,
   loginButtonHandler,
 }) {
   const [showLoadMore, setshowLoadMore] = React.useState(true);
@@ -26,7 +25,6 @@ function SearchResults({
         cards={cardsToRender}
         savedArticles={savedArticles}
         lastSearchRequest={lastSearchRequest}
-        isLoggedIn={isLoggedIn}
         loginButtonHandler={loginButtonHandler}
       />
       {showLoadMore ? (

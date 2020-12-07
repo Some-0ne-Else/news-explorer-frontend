@@ -4,16 +4,11 @@ import './MobileMenu.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 import { CurrentUserContext } from '../../contexts/CurrentUser';
+import { useLocation } from 'react-router-dom';
 
-function MobileMenu({
-  isOpen,
-  isSavedNews,
-  isLoggedIn,
-  handleLogout,
-  loginButtonHandler,
-  onClose,
-}) {
+function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
   const currentUser = React.useContext(CurrentUserContext);
+  const location = useLocation();
 
   let mobileMenuContainer = 'mobile-menu__container';
   let mobileMenuTitle = 'mobile-menu__title';
@@ -22,7 +17,7 @@ function MobileMenu({
   let mobileMenuMenuButton = 'mobile-menu__menu-button';
   let exitImg = exitButtonImage;
 
-  if (isSavedNews) {
+  if (location.pathname === '/saved-news') {
     mobileMenuContainer =
       'mobile-menu__container mobile-menu__container_theme_white';
     mobileMenuTitle = 'mobile-menu__title mobile-menu__title_theme_white';
@@ -34,12 +29,12 @@ function MobileMenu({
 
     exitImg = exitButtonImageThemeWhite;
   }
-  if (isLoggedIn) {
+  if (currentUser) {
     return (
       <section className={`mobile-menu ${isOpen && 'mobile-menu_opened'}`}>
         <div className={mobileMenuContainer}>
           <div className="mobile-menu__header-wrapper">
-            <Link className={mobileMenuTitle} to="/">
+            <Link className={mobileMenuTitle} to="/" onClick={onClose}>
               NewsExplorer
             </Link>
             <button
@@ -52,12 +47,16 @@ function MobileMenu({
           <nav className="mobile-menu__navigation">
             <ul className="mobile-menu__menu">
               <li className="mobile-menu__menu-item">
-                <Link to="/" className={mobileMenuLink}>
+                <Link to="/" onClick={onClose} className={mobileMenuLink}>
                   Главная
                 </Link>
               </li>
               <li className="mobile-menu__menu-item">
-                <Link to="/saved-news" className={mobileMenuLink}>
+                <Link
+                  to="/saved-news"
+                  onClick={onClose}
+                  className={mobileMenuLink}
+                >
                   Сохраненные статьи
                 </Link>
               </li>
@@ -79,7 +78,7 @@ function MobileMenu({
     <section className={`mobile-menu ${isOpen && 'mobile-menu_opened'}`}>
       <div className={mobileMenuContainer}>
         <div className="mobile-menu__header-wrapper">
-          <Link className={mobileMenuTitle} to="/">
+          <Link className={mobileMenuTitle} to="/" onClick={onClose}>
             NewsExplorer
           </Link>
           <button
@@ -92,7 +91,7 @@ function MobileMenu({
         <nav className="mobile-menu__navigation">
           <ul className="mobile-menu__menu">
             <li className="mobile-menu__menu-item">
-              <Link to="/" className={mobileMenuLink}>
+              <Link to="/" onClick={onClose} className={mobileMenuLink}>
                 Главная
               </Link>
             </li>

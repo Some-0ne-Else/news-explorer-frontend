@@ -7,7 +7,6 @@ function NewsCardList({
   cards,
   savedArticles,
   lastSearchRequest,
-  isLoggedIn,
   updateSavedCards,
   loginButtonHandler,
 }) {
@@ -17,7 +16,6 @@ function NewsCardList({
       <section className="news-card-list">
         {cards.map((card, index) => (
           <NewsCard
-            isLoggedIn={isLoggedIn}
             keyword={card.keyword}
             title={card.title}
             text={card.description}
@@ -38,7 +36,6 @@ function NewsCardList({
     <section className="news-card-list">
       {cards.map((card) => (
         <NewsCard
-          isLoggedIn={isLoggedIn}
           keyword={card.keyword}
           title={card.title}
           text={card.text}

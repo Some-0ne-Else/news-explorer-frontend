@@ -11,17 +11,18 @@ import newsApi from '../../utils/NewsApi';
 import api from '../../utils/MainApi';
 import noImage from '../../images/no-image.png';
 import { cardsPerStep } from '../../utils/Constants';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function Main({
-  isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
+  showSearchResults,
+  setShowSearchResults,
   lastSearchRequest,
   setLastSearchRequest,
 }) {
-  const [showSearchResults, setShowSearchResults] = React.useState(false);
   const [resultsArray, setResultsArray] = React.useState([]);
   const [savedArticles, setSavedArticles] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(3);
@@ -30,24 +31,25 @@ function Main({
   const [isSearchButtonBlocked, setisSearchButtonBlocked] = React.useState(
     false,
   );
+  const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    if (isLoggedIn) {
+    if (currentUser) {
       if (localStorage.getItem('searchResult')) {
         setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
         setShowSearchResults(true);
       }
     }
-  }, [isLoggedIn]);
+  }, [currentUser, setShowSearchResults]);
 
   React.useEffect(() => {
     setLastSearchRequest(localStorage.getItem('lastSearchRequest'));
-    if (isLoggedIn) {
+    if (currentUser) {
       api.getArticles(localStorage.getItem('jwt')).then((res) => {
         setSavedArticles(res);
       });
     }
-  }, [isLoggedIn, setLastSearchRequest]);
+  }, [currentUser, setLastSearchRequest]);
 
   function fixAbsentData(searchArray) {
     searchArray.forEach((item) => {
@@ -91,12 +93,10 @@ function Main({
   return (
     <section className="main">
       <Header
-        isLoggedIn={isLoggedIn}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
         handleLogout={handleLogout}
-        isSavedNews={false}
       />
       <div className="main__wrapper">
         <h2 className="main__title">Что творится в мире?</h2>
@@ -113,7 +113,6 @@ function Main({
       {isNoResults ? <NoResults /> : null}
       {showSearchResults ? (
         <SearchResults
-          isLoggedIn={isLoggedIn}
           resultsArray={resultsArray}
           savedArticles={savedArticles}
           lastSearchRequest={lastSearchRequest}

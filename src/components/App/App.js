@@ -18,9 +18,8 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [isMobileMenu, setIsMobileMenu] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedin] = React.useState(false);
+  const [showSearchResults, setShowSearchResults] = React.useState(false);
   const [lastSearchRequest, setLastSearchRequest] = React.useState('');
-
   const history = useHistory();
 
   React.useEffect(() => {
@@ -90,7 +89,6 @@ function App() {
   }
 
   function handleLogin(name) {
-    setIsLoggedin(true);
     setCurrentUser(name);
     closeAnyPopup();
   }
@@ -101,11 +99,11 @@ function App() {
   }
 
   function handleLogout() {
-    setIsLoggedin(false);
     setCurrentUser('');
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchResult');
     localStorage.removeItem('lastSearchRequest');
+    setShowSearchResults(false);
     history.push('/');
   }
 
@@ -133,18 +131,19 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Main
-              isLoggedIn={isLoggedIn}
               isMobileMenu={isMobileMenu}
               handleMobileMenuClick={handleMobileMenuClick}
               loginButtonHandler={loginButtonHandler}
               handleLogout={handleLogout}
+              showSearchResults={showSearchResults}
+              setShowSearchResults={setShowSearchResults}
               lastSearchRequest={lastSearchRequest}
               setLastSearchRequest={setLastSearchRequest}
             />
           </Route>
           <ProtectedRoute
-            isLoggedIn={isLoggedIn}
             path="/saved-news"
+            currentUser={currentUser}
             isMobileMenu={isMobileMenu}
             handleMobileMenuClick={handleMobileMenuClick}
             handleLogout={handleLogout}
@@ -170,7 +169,6 @@ function App() {
         />
         <MobileMenu
           isOpen={isMobileMenuOpen}
-          isLoggedIn={isLoggedIn}
           handleLogout={handleLogout}
           onClose={closeAnyPopup}
           loginButtonHandler={loginButtonHandler}
