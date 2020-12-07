@@ -26,7 +26,6 @@ function SearchResults({
         cards={cardsToRender}
         savedArticles={savedArticles}
         lastSearchRequest={lastSearchRequest}
-        isSearchCard={true}
         isLoggedIn={isLoggedIn}
         loginButtonHandler={loginButtonHandler}
       />

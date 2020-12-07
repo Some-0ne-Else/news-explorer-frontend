@@ -1,20 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Navigation.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function Navigation({
-  isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
-  isSavedNews,
   handleLogout,
   loginButtonHandler,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-
+  const location = useLocation();
   let navigationMenuLink = 'navigation__menu-link';
   let navigationMenuLinkActive = 'navigation__menu-link_active';
   let navigationMenuItem = 'navigation__menu-item';
@@ -22,7 +20,7 @@ function Navigation({
   let navigationMobileButton = 'navigation__mobile-button';
 
   let exitImg = exitButtonImage;
-  if (isSavedNews) {
+  if (location.pathname === '/saved-news') {
     navigationMenuLink =
       'navigation__menu-link navigation__menu-link_theme_white';
     navigationMenuLinkActive =
@@ -45,7 +43,7 @@ function Navigation({
       ></button>
     );
   }
-  if (isLoggedIn) {
+  if (currentUser) {
     return (
       <nav className="navigation">
         <ul className="navigation__menu">

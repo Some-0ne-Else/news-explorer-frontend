@@ -1,17 +1,18 @@
 import React from 'react';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
+import { useLocation } from 'react-router-dom';
 
 function NewsCardList({
   cards,
   savedArticles,
   lastSearchRequest,
-  isSearchCard,
   isLoggedIn,
   updateSavedCards,
   loginButtonHandler,
 }) {
-  if (isSearchCard) {
+  const location = useLocation();
+  if (location.pathname === '/') {
     return (
       <section className="news-card-list">
         {cards.map((card, index) => (
@@ -27,7 +28,6 @@ function NewsCardList({
             key={index}
             savedArticles={savedArticles}
             lastSearchRequest={lastSearchRequest}
-            isSearchCard={isSearchCard}
             loginButtonHandler={loginButtonHandler}
           />
         ))}
@@ -48,7 +48,6 @@ function NewsCardList({
           source={card.source}
           key={card._id}
           id={card._id}
-          isSearchCard={isSearchCard}
           updateSavedCards={updateSavedCards}
         />
       ))}

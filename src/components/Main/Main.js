@@ -13,7 +13,6 @@ import noImage from '../../images/no-image.png';
 import { cardsPerStep } from '../../utils/Constants';
 
 function Main({
-  DeactivateSavedNews,
   isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
@@ -49,10 +48,6 @@ function Main({
       });
     }
   }, [isLoggedIn, setLastSearchRequest]);
-
-  React.useEffect(() => {
-    DeactivateSavedNews();
-  });
 
   function fixAbsentData(searchArray) {
     searchArray.forEach((item) => {
@@ -96,7 +91,6 @@ function Main({
   return (
     <section className="main">
       <Header
-        DeactivateSavedNews={DeactivateSavedNews}
         isLoggedIn={isLoggedIn}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}

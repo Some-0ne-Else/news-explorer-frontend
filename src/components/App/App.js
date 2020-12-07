@@ -18,7 +18,6 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [isMobileMenu, setIsMobileMenu] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isSavedNews, setIsSavedNews] = React.useState(false);
   const [isLoggedIn, setIsLoggedin] = React.useState(false);
   const [lastSearchRequest, setLastSearchRequest] = React.useState('');
 
@@ -118,12 +117,6 @@ function App() {
     removeEventListeners();
   }
 
-  function ActivateSavedNews() {
-    setIsSavedNews(true);
-  }
-  function DeactivateSavedNews() {
-    setIsSavedNews(false);
-  }
   function removeEventListeners() {
     const popupWithLogin = document.querySelector('.popup_login');
     const popupWithSignup = document.querySelector('.popup_sign-up');
@@ -140,7 +133,6 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Main
-              DeactivateSavedNews={DeactivateSavedNews}
               isLoggedIn={isLoggedIn}
               isMobileMenu={isMobileMenu}
               handleMobileMenuClick={handleMobileMenuClick}
@@ -153,8 +145,6 @@ function App() {
           <ProtectedRoute
             isLoggedIn={isLoggedIn}
             path="/saved-news"
-            isSavedNews={isSavedNews}
-            ActivateSavedNews={ActivateSavedNews}
             isMobileMenu={isMobileMenu}
             handleMobileMenuClick={handleMobileMenuClick}
             handleLogout={handleLogout}
@@ -183,7 +173,6 @@ function App() {
           isLoggedIn={isLoggedIn}
           handleLogout={handleLogout}
           onClose={closeAnyPopup}
-          isSavedNews={isSavedNews}
           loginButtonHandler={loginButtonHandler}
         />
       </div>

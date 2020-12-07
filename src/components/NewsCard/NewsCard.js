@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import api from '../../utils/MainApi';
 import './NewsCard.css';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function NewsCard({
   id,
@@ -11,8 +13,6 @@ function NewsCard({
   source,
   link,
   image,
-  isSearchCard,
-  isLoggedIn,
   updateSavedCards,
   savedArticles,
   lastSearchRequest,
@@ -22,9 +22,12 @@ function NewsCard({
   const [savedId, setSavedId] = React.useState('');
   const [isHovered, setIsHovered] = React.useState(false);
   const [isClicked, setIsClicked] = React.useState(false);
+  const currentUser = React.useContext(CurrentUserContext);
+  const location = useLocation();
 
   React.useEffect(() => {
-    if (isSearchCard && isLoggedIn) {
+    // Marking searchCard with bookmars if we already saved thems
+    if (location.pathname === '/' && currentUser) {
       let article;
       if (savedArticles.hasOwnProperty('data')) {
         article = savedArticles.data.find((article) => article.link === link);
@@ -35,7 +38,7 @@ function NewsCard({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedArticles, link, isSearchCard]);
+  }, [savedArticles, link]);
 
   function changeDateFormat(dateString) {
     const date = new Date(dateString);
@@ -109,7 +112,7 @@ function NewsCard({
     setIsClicked(!isClicked);
   }
 
-  if (isSearchCard && isLoggedIn) {
+  if (location.pathname === '/' && currentUser) {
     return (
       <div className="news-card">
         <div className="news-card__image-wrapper">
@@ -136,7 +139,7 @@ function NewsCard({
     );
   }
 
-  if (isSearchCard) {
+  if (location.pathname === '/') {
     return (
       <div className="news-card">
         <div className="news-card__image-wrapper">

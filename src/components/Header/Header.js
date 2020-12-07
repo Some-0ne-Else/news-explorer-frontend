@@ -1,19 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
 function Header({
-  isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
-  isSavedNews,
 }) {
+  const location = useLocation();
   let headerLink = 'header__link';
   let header = 'header';
-  if (isSavedNews) {
+  if (location.pathname === '/saved-news') {
     headerLink = 'header__link header__link_theme_white';
     header = 'header header_theme_white';
   }
@@ -26,10 +25,8 @@ function Header({
           </Link>
         </h1>
         <Navigation
-          isLoggedIn={isLoggedIn}
           isMobileMenu={isMobileMenu}
           handleMobileMenuClick={handleMobileMenuClick}
-          isSavedNews={isSavedNews}
           loginButtonHandler={loginButtonHandler}
           handleLogout={handleLogout}
         />
