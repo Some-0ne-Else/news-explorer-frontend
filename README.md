@@ -1,6 +1,6 @@
 # Дипломная работа по курсу  Яндекс Практикум (фронтенд)
 ## 12 поток курса Веб-разработчик
-## Домен на котором развернут проект: [api.some0neelse.tk](https://api.some0neelse.tk) [www.api.some0neelse.tk](https://www.api.some0neelse.tk)
+## Домен на котором развернут проект: [some0neelse.tk](https://some0neelse.tk)
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
