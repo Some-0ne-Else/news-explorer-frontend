@@ -11,45 +11,45 @@ import newsApi from '../../utils/NewsApi';
 import api from '../../utils/MainApi';
 import noImage from '../../images/no-image.png';
 import { cardsPerStep } from '../../utils/Constants';
+import { CurrentUserContext } from '../../contexts/CurrentUser';
 
 function Main({
-  DeactivateSavedNews,
-  isLoggedIn,
   isMobileMenu,
   handleMobileMenuClick,
   loginButtonHandler,
   handleLogout,
+  showSearchResults,
+  setShowSearchResults,
   lastSearchRequest,
   setLastSearchRequest,
 }) {
-  const [showSearchResults, setShowSearchResults] = React.useState(false);
   const [resultsArray, setResultsArray] = React.useState([]);
   const [savedArticles, setSavedArticles] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(3);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isNoResults, setIsNoResults] = React.useState(false);
+  const [isSearchButtonBlocked, setisSearchButtonBlocked] = React.useState(
+    false,
+  );
+  const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    if (isLoggedIn) {
+    if (currentUser) {
       if (localStorage.getItem('searchResult')) {
         setResultsArray(JSON.parse(localStorage.getItem('searchResult')));
         setShowSearchResults(true);
       }
     }
-  }, [isLoggedIn]);
+  }, [currentUser, setShowSearchResults]);
 
   React.useEffect(() => {
     setLastSearchRequest(localStorage.getItem('lastSearchRequest'));
-    if (isLoggedIn) {
+    if (currentUser) {
       api.getArticles(localStorage.getItem('jwt')).then((res) => {
         setSavedArticles(res);
       });
     }
-  }, [isLoggedIn, setLastSearchRequest]);
-
-  React.useEffect(() => {
-    DeactivateSavedNews();
-  });
+  }, [currentUser, setLastSearchRequest]);
 
   function fixAbsentData(searchArray) {
     searchArray.forEach((item) => {
@@ -59,25 +59,31 @@ function Main({
     });
   }
 
-  function handleSearch(searchStr) {
+  function handleSearch(searchRequest) {
+    setisSearchButtonBlocked(true);
     setShowSearchResults(false);
     setIsNoResults(false);
     setIsLoading(true);
-    setLastSearchRequest(searchStr);
+    setLastSearchRequest(searchRequest);
     newsApi
-      .search(searchStr)
+      .search(searchRequest)
       .then((res) => {
-        if (res.articles.length > 0 && res.status === 'ok') {
-          fixAbsentData(res.articles);
-          localStorage.setItem('searchResult', JSON.stringify(res.articles));
-          localStorage.setItem('lastSearchRequest', searchStr);
-          setResultsArray(res.articles);
-          setShowSearchResults(true);
-        } else {
-          setIsNoResults(true);
-        }
+        if (res) {
+          if (res.articles.length > 0 && res.status === 'ok') {
+            fixAbsentData(res.articles);
+            localStorage.setItem('searchResult', JSON.stringify(res.articles));
+            localStorage.setItem('lastSearchRequest', searchRequest);
+            setResultsArray(res.articles);
+            setShowSearchResults(true);
+          } else {
+            setIsNoResults(true);
+          }
+        } else console.log('Ошибка при получении данных');
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        setisSearchButtonBlocked(false);
+      });
   }
 
   function loadMore() {
@@ -87,13 +93,10 @@ function Main({
   return (
     <section className="main">
       <Header
-        DeactivateSavedNews={DeactivateSavedNews}
-        isLoggedIn={isLoggedIn}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         loginButtonHandler={loginButtonHandler}
         handleLogout={handleLogout}
-        isSavedNews={false}
       />
       <div className="main__wrapper">
         <h2 className="main__title">Что творится в мире?</h2>
@@ -101,13 +104,15 @@ function Main({
           Находите самые свежие статьи на любую тему и сохраняйте в своём личном
           кабинете.
         </p>
-        <SearchForm handleSearch={handleSearch} />
+        <SearchForm
+          handleSearch={handleSearch}
+          isSearchButtonBlocked={isSearchButtonBlocked}
+        />
       </div>
       {isLoading ? <Preloader /> : null}
       {isNoResults ? <NoResults /> : null}
       {showSearchResults ? (
         <SearchResults
-          isLoggedIn={isLoggedIn}
           resultsArray={resultsArray}
           savedArticles={savedArticles}
           lastSearchRequest={lastSearchRequest}

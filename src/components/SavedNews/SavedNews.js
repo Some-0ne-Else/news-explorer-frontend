@@ -6,14 +6,7 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
 import api from '../../utils/MainApi';
 
-function SavedNews({
-  ActivateSavedNews,
-  isSavedNews,
-  isLoggedIn,
-  isMobileMenu,
-  handleMobileMenuClick,
-  handleLogout,
-}) {
+function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
   const [savedNewsArticles, setSavedNewsArticles] = React.useState([]);
   const [keyState, setKeyState] = React.useState('');
   const [statArray, setStatArray] = React.useState([]);
@@ -30,15 +23,14 @@ function SavedNews({
   }, [statArray]);
 
   React.useEffect(() => {
-    api.getArticles(localStorage.getItem('jwt')).then((res) => {
-      setSavedNewsArticles(res.data);
-      setStatArray(countWords(res.data));
-    });
+    api
+      .getArticles(localStorage.getItem('jwt'))
+      .then((res) => {
+        setSavedNewsArticles(res.data);
+        setStatArray(countWords(res.data));
+      })
+      .catch((err) => console.log(err));
   }, []);
-
-  React.useEffect(() => {
-    ActivateSavedNews();
-  }, [ActivateSavedNews]);
 
   function updateSavedCards() {
     api.getArticles(localStorage.getItem('jwt')).then((res) => {
@@ -72,8 +64,6 @@ function SavedNews({
   return (
     <section className="saved-news">
       <Header
-        isSavedNews={isSavedNews}
-        isLoggedIn={isLoggedIn}
         isMobileMenu={isMobileMenu}
         handleMobileMenuClick={handleMobileMenuClick}
         handleLogout={handleLogout}
@@ -89,7 +79,6 @@ function SavedNews({
         setStatArray={setStatArray}
         statArray={statArray}
         savedArticles={savedNewsArticles}
-        isLoggedIn={isLoggedIn}
         updateSavedCards={updateSavedCards}
       />
       <Footer />

@@ -1,7 +1,10 @@
-# Дипломная работа по курсу  Яндекс Практикум (фронтенд)
-## 12 поток курса Веб-разработчик
-## Домен на котором развернут проект: [some0neelse.tk](https://some0neelse.tk)
+# NewsExplorer
+## Фронтенд для проекта NewsExplorer
 
+Данный проект представляет собой веб-приложение для поиска новостей. C помощью данного приложения можно искать новости по ключевому слову и сохранять их в личном кабинете.
+Проект развернут по адресу: [https://some0neelse.tk/](https://some0neelse.tk/)
+Для запуска проекта используйте команду:
+### `npm start`
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

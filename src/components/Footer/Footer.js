@@ -7,7 +7,9 @@ import githubLogo from '../../images/github_logo.svg';
 function Footer() {
   return (
     <section className="footer">
-      <p className="footer__copyright">© 2020 Supersite, Powered by News API</p>
+      <p className="footer__copyright">
+        © 2020 Some0neElse, Powered by News API
+      </p>
       <div className="footer__wrapper">
         <nav className="footer__nav">
           <ul className="footer__menu">
