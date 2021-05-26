@@ -24,11 +24,7 @@ function App() {
 
   React.useEffect(() => {
     function checkSizeOfWindow() {
-      if (window.innerWidth <= 510) {
-        setIsMobileMenu(true);
-      } else {
-        setIsMobileMenu(false);
-      }
+      window.innerWidth <= 510 ? setIsMobileMenu(true) : setIsMobileMenu(false);
     }
     checkSizeOfWindow();
     window.addEventListener('resize', checkSizeOfWindow);
