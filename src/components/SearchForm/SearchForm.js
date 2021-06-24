@@ -3,7 +3,7 @@ import './SearchForm.css';
 
 function SearchForm({ handleSearch, isSearchButtonBlocked }) {
   const searchStringRef = React.useRef('');
-  const inputRef = React.createRef();
+  const inputRef = React.useRef();
 
   React.useEffect(() => {
     inputRef.current.focus();
