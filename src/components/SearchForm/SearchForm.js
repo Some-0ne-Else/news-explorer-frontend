@@ -3,7 +3,11 @@ import './SearchForm.css';
 
 function SearchForm({ handleSearch, isSearchButtonBlocked }) {
   const searchStringRef = React.useRef('');
+  const inputRef = React.createRef();
 
+  React.useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   function handleChange(e) {
     searchStringRef.current = e.target.value;
   }
@@ -18,6 +22,7 @@ function SearchForm({ handleSearch, isSearchButtonBlocked }) {
         placeholder="Введите тему новости"
         required
         onChange={handleChange}
+        ref={inputRef}
       ></input>
 
       {isSearchButtonBlocked ? (
