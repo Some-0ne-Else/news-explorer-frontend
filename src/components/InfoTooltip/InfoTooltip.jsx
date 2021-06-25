@@ -1,5 +1,6 @@
 import React from 'react';
 import './InfoTooltip.css';
+import PropTypes from 'prop-types';
 
 function InfoTooltip({ isOpen, onLogin, onClose }) {
   return (
@@ -16,12 +17,18 @@ function InfoTooltip({ isOpen, onLogin, onClose }) {
           Войти
         </button>
         <button
+          aria-label="close"
           type="button"
           className="info-tooltip__close-button"
           onClick={onClose}
-        ></button>
+        />
       </div>
     </section>
   );
 }
 export default InfoTooltip;
+InfoTooltip.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

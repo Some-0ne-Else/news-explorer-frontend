@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './MobileMenu.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
 import { CurrentUserContext } from '../../contexts/CurrentUser';
-import { useLocation } from 'react-router-dom';
 
-function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
+function MobileMenu({
+  isOpen, handleLogout, loginButtonHandler, onClose,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
   const location = useLocation();
 
@@ -18,14 +20,11 @@ function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
   let exitImg = exitButtonImage;
 
   if (location.pathname === '/saved-news') {
-    mobileMenuContainer =
-      'mobile-menu__container mobile-menu__container_theme_white';
+    mobileMenuContainer = 'mobile-menu__container mobile-menu__container_theme_white';
     mobileMenuTitle = 'mobile-menu__title mobile-menu__title_theme_white';
-    mobileMenuCloseButton =
-      'mobile-menu__close-button mobile-menu__close-button_theme_white';
+    mobileMenuCloseButton = 'mobile-menu__close-button mobile-menu__close-button_theme_white';
     mobileMenuLink = 'mobile-menu__link mobile-menu__link_theme_white';
-    mobileMenuMenuButton =
-      'mobile-menu__menu-button mobile-menu__menu-button_theme_white';
+    mobileMenuMenuButton = 'mobile-menu__menu-button mobile-menu__menu-button_theme_white';
 
     exitImg = exitButtonImageThemeWhite;
   }
@@ -38,10 +37,11 @@ function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
               NewsExplorer
             </Link>
             <button
+              aria-label="close"
               type="button"
               className={mobileMenuCloseButton}
               onClick={onClose}
-            ></button>
+            />
           </div>
 
           <nav className="mobile-menu__navigation">
@@ -82,10 +82,11 @@ function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
             NewsExplorer
           </Link>
           <button
+            aria-label="close"
             type="button"
             className={mobileMenuCloseButton}
             onClick={onClose}
-          ></button>
+          />
         </div>
 
         <nav className="mobile-menu__navigation">
@@ -109,3 +110,10 @@ function MobileMenu({ isOpen, handleLogout, loginButtonHandler, onClose }) {
   );
 }
 export default MobileMenu;
+
+MobileMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

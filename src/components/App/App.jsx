@@ -24,12 +24,36 @@ function App() {
 
   React.useEffect(() => {
     function checkSizeOfWindow() {
-      window.innerWidth <= 510 ? setIsMobileMenu(true) : setIsMobileMenu(false);
+      return window.innerWidth <= 510 ? setIsMobileMenu(true) : setIsMobileMenu(false);
     }
     checkSizeOfWindow();
     window.addEventListener('resize', checkSizeOfWindow);
+    return () => { window.removeEventListener('resize', checkSizeOfWindow); };
   }, [isMobileMenu]);
 
+  function closeAnyPopup() {
+    setIsLoginPopupOpen(false);
+    setIsSignUpPopupOpen(false);
+    setIsInfoTooltipOpen(false);
+    setIsMobileMenuOpen(false);
+    // eslint-disable-next-line no-use-before-define
+    removeEventListeners();
+  }
+  function closePopupAtOverlayClick(evt) {
+    if (this === evt.target) {
+      closeAnyPopup();
+    }
+  }
+  function removeEventListeners() {
+    const popupWithLogin = document.querySelector('.popup_login');
+    const popupWithSignup = document.querySelector('.popup_sign-up');
+    const infoTooltipPopup = document.querySelector('.info-tooltip');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    popupWithLogin.removeEventListener('click', closePopupAtOverlayClick);
+    popupWithSignup.removeEventListener('click', closePopupAtOverlayClick);
+    infoTooltipPopup.removeEventListener('click', closePopupAtOverlayClick);
+    mobileMenu.removeEventListener('click', closePopupAtOverlayClick);
+  }
   function handleMobileMenuClick() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     const mobileMenu = document.querySelector('.mobile-menu');
@@ -39,7 +63,6 @@ function App() {
     if (evt.key === 'Escape') {
       closeAnyPopup();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -49,19 +72,16 @@ function App() {
     };
   }, [handleEscPress]);
 
-  function closePopupAtOverlayClick(evt) {
-    if (this === evt.target) {
-      closeAnyPopup();
-    }
+  function handleLogin(name) {
+    setCurrentUser(name);
+    closeAnyPopup();
   }
-
   React.useEffect(() => {
     if (localStorage.getItem('jwt')) {
       api.checkToken(localStorage.getItem('jwt')).then((res) => {
         handleLogin(res.data.name);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function loginButtonHandler() {
@@ -84,11 +104,6 @@ function App() {
     infoTooltipPopup.addEventListener('mousedown', closePopupAtOverlayClick);
   }
 
-  function handleLogin(name) {
-    setCurrentUser(name);
-    closeAnyPopup();
-  }
-
   function handleSignUp() {
     setIsSignUpPopupOpen(false);
     openInfoTooltip();
@@ -103,24 +118,6 @@ function App() {
     history.push('/');
   }
 
-  function closeAnyPopup() {
-    setIsLoginPopupOpen(false);
-    setIsSignUpPopupOpen(false);
-    setIsInfoTooltipOpen(false);
-    setIsMobileMenuOpen(false);
-    removeEventListeners();
-  }
-
-  function removeEventListeners() {
-    const popupWithLogin = document.querySelector('.popup_login');
-    const popupWithSignup = document.querySelector('.popup_sign-up');
-    const infoTooltipPopup = document.querySelector('.info-tooltip');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    popupWithLogin.removeEventListener('click', closePopupAtOverlayClick);
-    popupWithSignup.removeEventListener('click', closePopupAtOverlayClick);
-    infoTooltipPopup.removeEventListener('click', closePopupAtOverlayClick);
-    mobileMenu.removeEventListener('click', closePopupAtOverlayClick);
-  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">

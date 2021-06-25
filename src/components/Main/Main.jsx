@@ -1,5 +1,6 @@
 import React from 'react';
 import './Main.css';
+import PropTypes from 'prop-types';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import About from '../About/About';
@@ -54,6 +55,7 @@ function Main({
   function fixAbsentData(searchArray) {
     searchArray.forEach((item) => {
       if (item.urlToImage === null) {
+        // eslint-disable-next-line no-param-reassign
         item.urlToImage = noImage;
       }
     });
@@ -78,6 +80,7 @@ function Main({
           } else {
             setIsNoResults(true);
           }
+        // eslint-disable-next-line no-console
         } else console.log('Ошибка при получении данных');
       })
       .finally(() => {
@@ -128,3 +131,15 @@ function Main({
 }
 
 export default Main;
+
+Main.propTypes = {
+  isMobileMenu: PropTypes.bool.isRequired,
+  handleMobileMenuClick: PropTypes.func.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+  showSearchResults: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  setShowSearchResults: PropTypes.func.isRequired,
+  lastSearchRequest: PropTypes.string.isRequired,
+  setLastSearchRequest: PropTypes.func.isRequired,
+
+};

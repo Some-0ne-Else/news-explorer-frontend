@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './Navigation.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
@@ -21,16 +22,11 @@ function Navigation({
 
   let exitImg = exitButtonImage;
   if (location.pathname === '/saved-news') {
-    navigationMenuLink =
-      'navigation__menu-link navigation__menu-link_theme_white';
-    navigationMenuLinkActive =
-      'navigation__menu-link_active navigation__menu-link_active_theme_white';
-    navigationMenuItem =
-      'navigation__menu-item navigation__menu-item_theme_white';
-    navigationMenuButton =
-      'navigation__menu-button navigation__menu-button_theme_white';
-    navigationMobileButton =
-      'navigation__mobile-button navigation__mobile-button_theme_white';
+    navigationMenuLink = 'navigation__menu-link navigation__menu-link_theme_white';
+    navigationMenuLinkActive = 'navigation__menu-link_active navigation__menu-link_active_theme_white';
+    navigationMenuItem = 'navigation__menu-item navigation__menu-item_theme_white';
+    navigationMenuButton = 'navigation__menu-button navigation__menu-button_theme_white';
+    navigationMobileButton = 'navigation__mobile-button navigation__mobile-button_theme_white';
     exitImg = exitButtonImageThemeWhite;
   }
 
@@ -38,9 +34,10 @@ function Navigation({
     return (
       <button
         type="button"
+        aria-label="mobile-menu"
         className={navigationMobileButton}
         onClick={handleMobileMenuClick}
-      ></button>
+      />
     );
   }
   if (currentUser) {
@@ -68,7 +65,7 @@ function Navigation({
             </NavLink>
           </li>
           <li className={navigationMenuItem}>
-            <button className={navigationMenuButton} onClick={handleLogout}>
+            <button type="button" className={navigationMenuButton} onClick={handleLogout}>
               {currentUser}
               <img alt="Иконка выхода" src={exitImg} />
             </button>
@@ -92,7 +89,7 @@ function Navigation({
           </NavLink>
         </li>
         <li className={navigationMenuItem}>
-          <button onClick={loginButtonHandler} className={navigationMenuButton}>
+          <button type="button" onClick={loginButtonHandler} className={navigationMenuButton}>
             Авторизоваться
           </button>
         </li>
@@ -102,3 +99,10 @@ function Navigation({
 }
 
 export default Navigation;
+
+Navigation.propTypes = {
+  isMobileMenu: PropTypes.bool.isRequired,
+  handleMobileMenuClick: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+};

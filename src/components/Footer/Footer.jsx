@@ -53,7 +53,7 @@ function Footer() {
               className="footer__link-image"
               alt="Facebook logo"
               src={facebookLogo}
-            ></img>
+            />
           </a>
         </div>
       </div>
