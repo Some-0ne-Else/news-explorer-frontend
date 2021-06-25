@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SearchForm.css';
 
 function SearchForm({ handleSearch, isSearchButtonBlocked }) {
@@ -23,7 +24,7 @@ function SearchForm({ handleSearch, isSearchButtonBlocked }) {
         required
         onChange={handleChange}
         ref={inputRef}
-      ></input>
+      />
 
       {isSearchButtonBlocked ? (
         <button className="search__button" type="submit" disabled>
@@ -39,3 +40,8 @@ function SearchForm({ handleSearch, isSearchButtonBlocked }) {
 }
 
 export default SearchForm;
+
+SearchForm.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+  isSearchButtonBlocked: PropTypes.bool.isRequired,
+};

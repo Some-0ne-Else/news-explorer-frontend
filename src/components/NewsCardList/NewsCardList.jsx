@@ -1,7 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard';
-import { useLocation } from 'react-router-dom';
 
 function NewsCardList({
   cards,
@@ -23,7 +25,7 @@ function NewsCardList({
             image={card.urlToImage}
             source={card.source.name}
             link={card.url}
-            key={index}
+            key={index.toString()}
             savedArticles={savedArticles}
             lastSearchRequest={lastSearchRequest}
             loginButtonHandler={loginButtonHandler}
@@ -53,3 +55,12 @@ function NewsCardList({
 }
 
 export default NewsCardList;
+
+NewsCardList.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  savedArticles: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  lastSearchRequest: PropTypes.string.isRequired,
+  updateSavedCards: PropTypes.func.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+
+};

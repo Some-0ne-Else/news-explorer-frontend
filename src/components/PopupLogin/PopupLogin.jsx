@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './PopupLogin.css';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import api from '../../utils/MainApi';
@@ -26,17 +27,19 @@ function PopupLogin({
             localStorage.setItem('jwt', res.token);
             api
               .checkToken(res.token)
-              .then((res) => {
-                onLogin(res.data.name);
+              .then((result) => {
+                onLogin(result.data.name);
                 loginFormValidation.resetForm();
                 e.target.closest('form').reset();
               })
+              // eslint-disable-next-line no-console
               .catch((err) => console.log(err));
           } else setActionError(res.message);
         } else {
           setActionError('Произошла ошибка. Попробуйте еще раз.');
         }
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
   }
 
@@ -93,3 +96,10 @@ function PopupLogin({
 }
 
 export default PopupLogin;
+
+PopupLogin.propTypes = {
+  isLoginPopupOpen: PropTypes.bool.isRequired,
+  registerButtonHandler: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+};

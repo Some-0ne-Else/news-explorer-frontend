@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './MobileMenu.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
-import { CurrentUserContext } from '../../contexts/CurrentUser';
+import CurrentUserContext from '../../contexts/CurrentUser';
 
 function MobileMenu({
   isOpen, handleLogout, loginButtonHandler, onClose,

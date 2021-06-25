@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import './App.css';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { CurrentUserContext } from '../../contexts/CurrentUser';
+import CurrentUserContext from '../../contexts/CurrentUser';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import PopupLogin from '../PopupLogin/PopupLogin';

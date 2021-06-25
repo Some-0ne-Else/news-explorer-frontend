@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SearchResults.css';
 import NewsCardList from '../NewsCardList/NewsCardList';
 
@@ -12,11 +13,9 @@ function SearchResults({
 }) {
   const [showLoadMore, setshowLoadMore] = React.useState(true);
   const cardsToRender = resultsArray.slice(0, currentIndex);
-  React.useEffect(() => {
-    resultsArray.length <= currentIndex
-      ? setshowLoadMore(false)
-      : setshowLoadMore(true);
-  }, [currentIndex, resultsArray.length]);
+  React.useEffect(() => (resultsArray.length <= currentIndex
+    ? setshowLoadMore(false)
+    : setshowLoadMore(true)), [currentIndex, resultsArray.length]);
 
   return (
     <section className="search-results">
@@ -41,3 +40,15 @@ function SearchResults({
 }
 
 export default SearchResults;
+
+SearchResults.propTypes = {
+  resultsArray: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  savedArticles: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  lastSearchRequest: PropTypes.string,
+  currentIndex: PropTypes.number.isRequired,
+  loadMoreHandler: PropTypes.func.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+};
+SearchResults.defaultProps = {
+  lastSearchRequest: '',
+};

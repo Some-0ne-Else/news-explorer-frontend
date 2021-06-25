@@ -1,5 +1,6 @@
 import React from 'react';
 import './PopupWithForm.css';
+import PropTypes from 'prop-types';
 
 function PopupWithForm({
   name,
@@ -22,10 +23,11 @@ function PopupWithForm({
       >
         <h2 className="popup__heading">{title}</h2>
         <button
+          aria-label="close"
           type="button"
           className="popup__close-button"
           onClick={onClose}
-        ></button>
+        />
         {children}
         {isValid ? (
           <button
@@ -59,3 +61,16 @@ function PopupWithForm({
   );
 }
 export default PopupWithForm;
+
+PopupWithForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  actionCaption: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  buttonName: PropTypes.string.isRequired,
+  buttonHandler: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
+};

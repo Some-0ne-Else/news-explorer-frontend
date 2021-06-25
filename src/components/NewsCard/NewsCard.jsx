@@ -1,8 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import api from '../../utils/MainApi';
 import './NewsCard.css';
-import { CurrentUserContext } from '../../contexts/CurrentUser';
+import CurrentUserContext from '../../contexts/CurrentUser';
+import { changeDateFormat } from '../../utils/Utils';
 
 function NewsCard({
   id,
@@ -26,42 +29,19 @@ function NewsCard({
   const location = useLocation();
 
   React.useEffect(() => {
-    // Marking searchCard with bookmars if we already saved thems
+    // Marking searchCard with bookmars if we already saved them
     if (location.pathname === '/' && currentUser) {
       let article;
+      // eslint-disable-next-line no-prototype-builtins
       if (savedArticles.hasOwnProperty('data')) {
-        article = savedArticles.data.find((article) => article.link === link);
+        article = savedArticles.data.find((a) => a.link === link);
       }
       if (article) {
         setIsBookmarked(true);
         setSavedId(article._id);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedArticles, link]);
-
-  function changeDateFormat(dateString) {
-    const date = new Date(dateString);
-    const monthNames = [
-      'января',
-      'февраля',
-      'марта',
-      'апреля',
-      'мая',
-      'июня',
-      'июля',
-      'августа',
-      'сентября',
-      'октября',
-      'ноября',
-      'декабря',
-    ];
-    const day = date.getDate();
-    const monthIndex = date.getMonth();
-    const monthName = monthNames[monthIndex];
-    const year = date.getFullYear();
-    return `${day} ${monthName} ${year}`;
-  }
 
   function handleBookmarkButton() {
     if (!isBookmarked) {
@@ -82,13 +62,15 @@ function NewsCard({
             setSavedId(res.data._id);
           }
         })
+        // eslint-disable-next-line no-console
         .catch((err) => console.log(err));
     } else {
       api
         .deleteArticle(localStorage.getItem('jwt'), savedId)
-        .then((res) => {
+        .then(() => {
           setIsBookmarked(false);
         })
+        // eslint-disable-next-line no-console
         .catch((err) => console.log(err));
     }
   }
@@ -101,6 +83,7 @@ function NewsCard({
           updateSavedCards();
         }
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
   }
 
@@ -117,6 +100,7 @@ function NewsCard({
       <div className="news-card">
         <div className="news-card__image-wrapper">
           <button
+            aria-label="bookmark"
             type="button"
             onClick={handleBookmarkButton}
             className={
@@ -124,7 +108,7 @@ function NewsCard({
                 ? 'news-card__bookmark-button news-card__bookmark-button_marked'
                 : 'news-card__bookmark-button'
             }
-          ></button>
+          />
           <a className="news-card__link" href={link} target="__blank">
             <img className="news-card__image" src={image} alt={title} />
           </a>
@@ -144,6 +128,7 @@ function NewsCard({
       <div className="news-card">
         <div className="news-card__image-wrapper">
           <button
+            type="button"
             className={
               isHovered
                 ? 'news-card__register-button news-card__register-button_active'
@@ -153,6 +138,7 @@ function NewsCard({
             Войдите, чтобы сохранять статьи
           </button>
           <button
+            aria-label="bookmark"
             type="button"
             onMouseEnter={handleHover}
             onMouseLeave={handleHover}
@@ -162,7 +148,7 @@ function NewsCard({
                 ? 'news-card__bookmark-button news-card__bookmark-button_marked'
                 : 'news-card__bookmark-button'
             }
-          ></button>
+          />
           <a className="news-card__link" href={link} target="__blank">
             <img className="news-card__image" src={image} alt={title} />
           </a>
@@ -192,10 +178,11 @@ function NewsCard({
           Убрать из сохранённых
         </button>
         <button
+          aria-label="delete"
           type="button"
           onClick={handlePreDelete}
           className="news-card__delete-button"
-        ></button>
+        />
         <a className="news-card__link" href={link} target="__blank">
           <img className="news-card__image" src={image} alt={title} />
         </a>
@@ -211,3 +198,17 @@ function NewsCard({
 }
 
 export default NewsCard;
+NewsCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  keyword: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  updateSavedCards: PropTypes.func.isRequired,
+  savedArticles: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  lastSearchRequest: PropTypes.string.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './PopupSignup.css';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import api from '../../utils/MainApi';
@@ -72,7 +73,7 @@ function PopupSignup({
         onChange={signupFormValidation.handleChange}
       />
       <p className="popup__input-error" name="password-error">
-        {signupFormValidation.errors.password}{' '}
+        {signupFormValidation.errors.password}
       </p>
       <p className="popup__caption">Имя</p>
       <input
@@ -85,7 +86,7 @@ function PopupSignup({
         onChange={signupFormValidation.handleChange}
       />
       <p className="popup__input-error" name="name-error">
-        {signupFormValidation.errors.name}{' '}
+        {signupFormValidation.errors.name}
       </p>
       <p className="popup__action-error" name="action-error">
         {actionError}
@@ -95,3 +96,10 @@ function PopupSignup({
 }
 
 export default PopupSignup;
+
+PopupSignup.propTypes = {
+  isSignUpPopupOpen: PropTypes.bool.isRequired,
+  loginButtonHandler: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  handleSignUp: PropTypes.func.isRequired,
+};

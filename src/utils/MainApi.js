@@ -1,4 +1,7 @@
-import { baseUrl, token } from './Constants.js';
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
+import { baseUrl, token } from './Constants';
 
 class Api {
   constructor(baseUrl, token) {
@@ -42,6 +45,7 @@ class Api {
         console.log(err);
       });
   }
+
   checkToken(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
@@ -66,9 +70,9 @@ class Api {
       .then((result) => {
         if (result.ok) {
           return result.json();
-        } else {
-          return Promise.reject(`Ошибка: ${result.status}`);
         }
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject(`Ошибка: ${result.status}`);
       })
       .catch((err) => {
         console.log(err);

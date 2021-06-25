@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Navigation.css';
 import exitButtonImage from '../../images/logout.png';
 import exitButtonImageThemeWhite from '../../images/logout_theme_white.png';
-import { CurrentUserContext } from '../../contexts/CurrentUser';
+import CurrentUserContext from '../../contexts/CurrentUser';
 
 function Navigation({
   isMobileMenu,

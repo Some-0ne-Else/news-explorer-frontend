@@ -10,9 +10,9 @@ import Preloader from '../Preloader/Preloader';
 import NoResults from '../NoResults/NoResults';
 import newsApi from '../../utils/NewsApi';
 import api from '../../utils/MainApi';
-import noImage from '../../images/no-image.png';
 import { cardsPerStep } from '../../utils/Constants';
-import { CurrentUserContext } from '../../contexts/CurrentUser';
+import CurrentUserContext from '../../contexts/CurrentUser';
+import { fixAbsentData } from '../../utils/Utils';
 
 function Main({
   isMobileMenu,
@@ -51,15 +51,6 @@ function Main({
       });
     }
   }, [currentUser, setLastSearchRequest]);
-
-  function fixAbsentData(searchArray) {
-    searchArray.forEach((item) => {
-      if (item.urlToImage === null) {
-        // eslint-disable-next-line no-param-reassign
-        item.urlToImage = noImage;
-      }
-    });
-  }
 
   function handleSearch(searchRequest) {
     setisSearchButtonBlocked(true);

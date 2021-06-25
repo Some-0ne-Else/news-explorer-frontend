@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SavedNews.css';
 import Header from '../Header/Header';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import NewsCardList from '../NewsCardList/NewsCardList';
 import Footer from '../Footer/Footer';
 import api from '../../utils/MainApi';
+import { countWords } from '../../utils/Utils';
 
 function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
   const [savedNewsArticles, setSavedNewsArticles] = React.useState([]);
@@ -14,7 +16,7 @@ function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
   React.useEffect(() => {
     setKeyState(
       statArray.map((item, index) => (
-        <span key={index} className="saved-news-header__keywords-span">
+        <span key={index.toString()} className="saved-news-header__keywords-span">
           {' '}
           {item.keyword}
         </span>
@@ -29,6 +31,7 @@ function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
         setSavedNewsArticles(res.data);
         setStatArray(countWords(res.data));
       })
+      // eslint-disable-next-line no-console
       .catch((err) => console.log(err));
   }, []);
 
@@ -37,28 +40,6 @@ function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
       setSavedNewsArticles(res.data);
       setStatArray(countWords(res.data));
     });
-  }
-
-  function countWords(arr) {
-    let resultArr = [];
-    let index = -1;
-    for (let i = 0; i < arr.length; i++) {
-      let acc = 0;
-      if (resultArr.find((el) => el.keyword === arr[i].keyword)) {
-        continue;
-      } // if keyword already checked, then skiping it
-      for (let j = 0; j < arr.length; j++) {
-        if (arr[i].keyword === arr[j].keyword) acc++;
-        if (j === arr.length - 1) {
-          index += 1;
-        }
-      }
-      resultArr[index] = { keyword: arr[i].keyword, counter: acc };
-    }
-    resultArr.sort(function (a, b) {
-      return b.counter - a.counter;
-    });
-    return resultArr;
   }
 
   return (
@@ -87,3 +68,9 @@ function SavedNews({ isMobileMenu, handleMobileMenuClick, handleLogout }) {
 }
 
 export default SavedNews;
+
+SavedNews.propTypes = {
+  isMobileMenu: PropTypes.bool.isRequired,
+  handleMobileMenuClick: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+};

@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-underscore-dangle */
 import { baseNewsUrl, apiKey, today, weekAgo } from './Constants';
 
 class NewsApi {
@@ -7,6 +9,7 @@ class NewsApi {
     this._today = today;
     this._weekAgo = weekAgo;
   }
+
   search(searchString) {
     return fetch(
       `${
@@ -20,6 +23,7 @@ class NewsApi {
     )
       .then((result) => result.json())
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log(err);
       });
   }
